@@ -20,7 +20,7 @@ def signup(request):
             email=request.data['email'],
             password=request.data['password1'],
         )    
-        serializer = TokenObtainPairSerializer(data={'email':request.data['email'], 'password': request.data['password1']})
+        serializer = CustomTokenObtainPairSerializer(data={'email':request.data['email'], 'password': request.data['password1']})
         if serializer.is_valid():
             return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
     else:

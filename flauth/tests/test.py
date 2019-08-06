@@ -31,5 +31,45 @@ class FlauthTestCase(TestCase):
             }),
             content_type="application/json"
         )
+
+        response = c.post(
+            '/signin', 
+            json.dumps({
+                    'email': 'test@gmail.com',
+                    'password': '1234',
+            }),
+            content_type="application/json"
+        )
         # self.assertEqual(response.data['access'], '한양대학교')     #token의 유무만 판단하는 용도로 사용
         # self.assertEqual(response.data['refresh'], '한양대학교')    #token의 유무만 판단하는 용도로 사용
+    def test_inspect_token(self):
+        c = Client()
+
+        response = c.post('/signin', 
+                json.dumps({
+                    'email': 'logo@gmail.com',
+                    'password': '1234',
+                }),
+                content_type="application/json")
+
+        response = c.post('/token/verify',
+                json.dumps({'token': response.data['access']}),
+                content_type="application/json")
+
+        self.assertEqual(response.status_code, 200)
+    
+    def test_refresh_token(self):
+        c = Client()
+
+        response = c.post('/signin', 
+                json.dumps({
+                    'email': 'logo@gmail.com',
+                    'password': '1234',
+                }),
+                content_type="application/json")
+
+        response = c.post('/token/refresh',
+                json.dumps({'refresh': response.data['refresh']}),
+                content_type="application/json")
+
+        self.assertEqual(response.status_code, 200)
