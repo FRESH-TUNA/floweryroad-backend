@@ -5,9 +5,9 @@ import logging
 
 class UserManager(BaseUserManager):
     def create_user(self, **kwargs):
-        if kwargs.get("email", False):
+        if not "email" in kwargs:
             raise ValueError('Users must have an email address')
-        if kwargs.get("password", False):
+        if not "password" in kwargs:
             raise ValueError('Users must have an password')
 
         user = self.model(
@@ -57,7 +57,7 @@ class User(AbstractBaseUser):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'                        #username으로 사용된다. 반드시 unique일것
+    USERNAME_FIELD = 'email'                       #username으로 사용된다. 반드시 unique일것
     # REQUIRED_FIELDS = ['nickname']                  #when command line createsuperuser시만 적용된다.
 
     def __str__(self):
