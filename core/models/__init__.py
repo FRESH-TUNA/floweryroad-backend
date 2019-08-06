@@ -1,2 +1,5 @@
 from .color import Color
 from .purpose import Purpose
+from .language import Language
+from .flower import Flower
+from .image import Image
