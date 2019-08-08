@@ -140,3 +140,4 @@ dmypy.json
 # Customized .gitignore
 .credential/
 .config/
+media/
