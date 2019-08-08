@@ -1,2 +1,2 @@
-
-class FlowerListSerializer
+class FlowerListSerializer:
+    pass
