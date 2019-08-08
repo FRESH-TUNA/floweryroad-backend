@@ -10,6 +10,6 @@ DATABASES = {
 }
 
 ALLOWED_HOSTS = [
-    '15.164.210.94',
+    'ec2-15-164-210-94.ap-northeast-2.compute.amazonaws.com',
 ]
 
