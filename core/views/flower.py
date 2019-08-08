@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 
 from core.models import Flower
-from core.serializers.flowerSerializers import FlowerListSerializer
+from core.serializers import FlowerListSerializer
 # from jockbo.apps.common.models import Post, Comment
 # from jockbo.apps.common.permissions import IsOwnerOrReadOnly
 from rest_framework.response import Response

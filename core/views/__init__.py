@@ -1,2 +1,2 @@
 from .flower import FlowerList, FlowerDetail
-# from .purpose import PurposeList
+from .purpose import PurposeViewSet
