@@ -1,4 +1,5 @@
 import json
+from django.conf import settings
 from .base import *
 
 CONFIG_SECRET_DIR = os.path.join(BASE_DIR, '.credential')
@@ -23,15 +24,20 @@ AWS_STORAGE_BUCKET_NAME = config_secret['aws']['s3_bucket_name']
 AWS_S3_SIGNATURE_VERSION = 's3v4'
 AWS_S3_REGION_NAME = 'ap-northeast-2'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
+#Storage setting
 DEFAULT_FILE_STORAGE = 'floweryroad.settings.storage_config.MediaStorage'
 STATICFILES_STORAGE = 'floweryroad.settings.storage_config.StaticStorage'
 MEDIAFILES_LOCATION = 'media'
 STATICFILES_LOCATION = 'static'
 
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config_secret['db']['NAME'],
+        'USER': config_secret['db']['USER'],
+        'PASSWORD': config_secret['db']['PASSWORD'],
+        'HOST': config_secret['db']['HOST'],
+        'PORT': config_secret['db']['PORT'],
+    }
+}
