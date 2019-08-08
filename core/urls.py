@@ -2,10 +2,10 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 from rest_framework.urlpatterns import format_suffix_patterns
-from .views import FlowerList, FlowerDetail
+from .views import FlowerList, FlowerDetail, PurposeViewSet
 
 router = DefaultRouter()
-# router.register(r'flowers', FlowerViewSet, basename='flower')
+router.register(r'purposes', PurposeViewSet, basename='purpose')
 urlpatterns = router.urls
 
 urlpatterns += format_suffix_patterns([
