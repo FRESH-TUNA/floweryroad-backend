@@ -55,14 +55,7 @@ class FlowerDetailSerializer(_FlowerSerializer):
                   'season', 'languages', 'colors', 'purposes']
 
 
-class FlowerForCommentListSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField('get_one_image')
-
+class CommentFlowerSerializer(FlowerListSerializer):
     class Meta:
         model = Flower
         fields = ['id', 'name', 'image']
-
-    def get_one_image(self, obj):
-        image = ImageSerializer(obj.images.first(), context={
-                                'request': self.context['request']})
-        return image.data
