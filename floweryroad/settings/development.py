@@ -17,24 +17,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': config_devdb_secret['db']['NAME'],
-#         'USER': config_devdb_secret['db']['USER'],
-#         'PASSWORD': config_devdb_secret['db']['PASSWORD'],
-#         'HOST': config_devdb_secret['db']['HOST'],
-#         'PORT': config_devdb_secret['db']['PORT'],
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'floweryroaddev',
-        'USER': 'floweryroadadmin',
-        'PASSWORD': 'floweryroad1234',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': config_devdb_secret['db']['NAME'],
+        'USER': config_devdb_secret['db']['USER'],
+        'PASSWORD': config_devdb_secret['db']['PASSWORD'],
+        'HOST': config_devdb_secret['db']['HOST'],
+        'PORT': config_devdb_secret['db']['PORT'],
     }
 }
