@@ -50,7 +50,7 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True,                                #username으로 쓰고싶은것에 반드시 unique 지정
     )
-    username = models.CharField(max_length=30, blank=True)
+    nickname = models.CharField(max_length=30, blank=True)
     purpose = models.ForeignKey(Purpose, on_delete=models.SET_NULL, null=True, blank=True)
     color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True, blank=True)
     is_active = models.BooleanField(default=True)
