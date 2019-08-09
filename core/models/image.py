@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from . import Flower
 
 class Image(models.Model):

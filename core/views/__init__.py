@@ -1,4 +1,3 @@
-from .root import APIRoot
-from .flower import FlowerList, FlowerDetail
+from .flower import FlowerViewSet
 from .purpose import PurposeViewSet
 from .color import ColorViewSet
