@@ -28,7 +28,7 @@ class CommentUserViewSet(_CommentViewSet, viewsets.ReadOnlyModelViewSet):
 class CommentLikeViewSet(_CommentViewSet, viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         user = User.objects.get(pk=self.kwargs['user_pk'])
-        return Comment.objects.filter(commentlike__user=user, commentlike__like=True)
+        return Comment.objects.filter(comment_likes__user=user, comment_likes__like=True)
 
 
 
