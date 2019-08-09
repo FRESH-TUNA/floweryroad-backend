@@ -51,6 +51,8 @@ class FlowerViewSet(viewsets.ReadOnlyModelViewSet):
                 queryset = Flower.objects.annotate(
                     view=Count('views')).order_by(ordering)
                 return queryset
+            return self.queryset
+        return self.queryset
 
     def get_serializer_class(self):
         if self.action == 'list':
