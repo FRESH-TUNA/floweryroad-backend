@@ -1,7 +1,8 @@
 from rest_framework import status
 from rest_framework.views import APIView
+import floweryroad.settings.base as settings
 
-from core.models import Comment
+from core.models import Comment, Flower
 from core.serializers.comment import CommentListSerializer
 from core.paginators.comment import CommentPaginator
 
@@ -9,13 +10,14 @@ from core.paginators.comment import CommentPaginator
 # from jockbo.apps.common.permissions import IsOwnerOrReadOnly
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+
 # from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 class FlowerCommentList(APIView):
     # permission_classes = (IsAuthenticatedOrReadOnly,)
     def get(self, request, id):        
         paginator = CommentPaginator()
-        comments = Comment.objects.all()
+        comments = Comment.objects.all().filter(flower=Flower.objects.get(id=id))
         comments = paginator.paginate_queryset(comments, request)
         serializer = CommentListSerializer(comments, context={'request':request}, many=True)
         return paginator.get_paginated_response(serializer.data)
@@ -25,7 +27,7 @@ class UserCommentList(APIView):
     
     def get(self, request, id):        
         paginator = CommentPaginator()
-        comments = Comment.objects.all()
+        comments = Comment.objects.all().filter(user=settings.AUTH_USER_MODEL.objects.get(id=id))
         comments = paginator.paginate_queryset(comments, request)
         serializer = CommentListSerializer(comments, context={'request':request}, many=True)
         return paginator.get_paginated_response(serializer.data)
