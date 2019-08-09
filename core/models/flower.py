@@ -10,7 +10,7 @@ class Flower(models.Model):
         (3, '겨울'),
     )
     name = models.CharField(max_length=20)
-    description = models.CharField(max_length=200)
+    description = models.TextField()
     season = models.IntegerField(default=1, choices=SEASON)
     languages = models.ManyToManyField(Language, related_name='flowers')
     colors = models.ManyToManyField(Color, related_name='flowers')
