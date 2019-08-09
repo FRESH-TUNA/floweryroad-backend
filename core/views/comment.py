@@ -8,17 +8,31 @@ from core.paginators.comment import CommentPaginator
 # from jockbo.apps.common.models import Post, Comment
 # from jockbo.apps.common.permissions import IsOwnerOrReadOnly
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 # from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-class CommentList(APIView):
+class FlowerCommentList(APIView):
     # permission_classes = (IsAuthenticatedOrReadOnly,)
-
-    def get(self, request):        
+    def get(self, request, id):        
         paginator = CommentPaginator()
         comments = Comment.objects.all()
         comments = paginator.paginate_queryset(comments, request)
         serializer = CommentListSerializer(comments, context={'request':request}, many=True)
         return paginator.get_paginated_response(serializer.data)
+
+class UserCommentList(APIView):
+        # permission_classes = (IsAuthenticatedOrReadOnly,)
+    
+    def get(self, request, id):        
+        paginator = CommentPaginator()
+        comments = Comment.objects.all()
+        comments = paginator.paginate_queryset(comments, request)
+        serializer = CommentListSerializer(comments, context={'request':request}, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+
+
+
     # def post(self, request, postPk=None):
     #     serializer = CommentSerializer(data=request.data)
     #     try:
@@ -30,8 +44,14 @@ class CommentList(APIView):
     
 
 # class FlowerDetail(APIView):
-#     def get_object(self, commentPk):
-#         return Comment.objects.get(id=commentPk)
+#     def get_object(self, pk):
+#         return get_object_or_404(Comment, id=commentPk)
+
+#     def get(self, request, pk=None):
+#         comment = self.get_object(pk)
+#         comments = paginator.paginate_queryset(comments, request)
+#         serializer = CommentListSerializer(comments, context={'request':request}, many=True)
+#         return paginator.get_paginated_response(serializer.data)
 
 #     def put(self, request, commentPk, format=None):
 #         try:
