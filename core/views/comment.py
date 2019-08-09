@@ -1,3 +1,40 @@
+from rest_framework import viewsets, mixins
+from rest_framework.response import Response
+from core.models import Comment
+from core.serializers import CommentSerializer
+
+class _CommentViewSet():
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+
+class CommentFlowerViewSet(_CommentViewSet, viewsets.ModelViewSet):
+    pass
+
+
+class CommentUserViewSet(_CommentViewSet, viewsets.ReadOnlyModelViewSet):
+    pass
+
+
+class CommentLikeViewSet(_CommentViewSet, viewsets.ReadOnlyModelViewSet):
+    pass
+
+class PurposeViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = Purpose.objects.all()
+    serializer_class = PurposeSerializer
+
+
+
+
+
+
+
+
+
+
+
+
+
 from rest_framework import status
 from rest_framework.views import APIView
 import floweryroad.settings.base as settings
