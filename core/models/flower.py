@@ -15,9 +15,11 @@ class Flower(models.Model):
     languages = models.ManyToManyField(Language, related_name='flowers')
     colors = models.ManyToManyField(Color, related_name='flowers')
     purposes = models.ManyToManyField(Purpose, related_name='flowers')
+
+    def __str__(self):
+        return self.name
     
     @property
     def season_name(self):
         season_list = [x[1] for x in self.SEASON]
         return season_list[self.season]
-    
