@@ -22,11 +22,33 @@ class LanguageSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class FlowerSerializer(serializers.ModelSerializer):
-    images = ImageSerializer(many=True, read_only=True)
+class _FlowerSerializer(serializers.ModelSerializer):
     languages = LanguageSerializer(many=True, read_only=True)
     colors = ColorSerializer(many=True, read_only=True)
     purposes = PurposeSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Flower
+        fields = ['id', 'name', 'description',
+                  'season', 'languages', 'colors', 'purposes']
+
+
+class FlowerListSerializer(_FlowerSerializer):
+    image = serializers.SerializerMethodField('get_thumbnail')
+
+    class Meta:
+        model = Flower
+        fields = ['id', 'name', 'description', 'image',
+                  'season', 'languages', 'colors', 'purposes']
+
+    def get_thumbnail(self, obj):
+        image = ImageSerializer(obj.images.first(), context={
+                                'request': self.context['request']})
+        return image.data
+
+
+class FlowerDetailSerializer(_FlowerSerializer):
+    images = ImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Flower
