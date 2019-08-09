@@ -3,6 +3,8 @@ from rest_framework.views import APIView
 
 from core.models import Comment
 from core.serializers.comment import CommentListSerializer
+from core.paginators.comment import CommentPaginator
+
 # from jockbo.apps.common.models import Post, Comment
 # from jockbo.apps.common.permissions import IsOwnerOrReadOnly
 from rest_framework.response import Response
@@ -11,11 +13,12 @@ from rest_framework.response import Response
 class CommentList(APIView):
     # permission_classes = (IsAuthenticatedOrReadOnly,)
 
-    def get(self, request):
-        flowers = Comment.objects.all()
-        serializer = CommentListSerializer(flowers, context={'request':request}, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
+    def get(self, request):        
+        paginator = CommentPaginator()
+        comments = Comment.objects.all()
+        comments = paginator.paginate_queryset(comments, request)
+        serializer = CommentListSerializer(comments, context={'request':request}, many=True)
+        return paginator.get_paginated_response(serializer.data)
     # def post(self, request, postPk=None):
     #     serializer = CommentSerializer(data=request.data)
     #     try:
