@@ -1,5 +1,5 @@
 from .base import urlpatterns
-from django.conf import settings
+import floweryroad.settings.development as settings
 from django.conf.urls.static import static
 
 urlpatterns += static(

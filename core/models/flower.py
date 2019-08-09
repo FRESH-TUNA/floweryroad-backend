@@ -1,3 +1,4 @@
+import logging
 from django.db import models
 from . import Purpose, Color, Language
 
@@ -14,3 +15,4 @@ class Flower(models.Model):
     languages = models.ManyToManyField(Language, related_name='flowers')
     colors = models.ManyToManyField(Color, related_name='flowers')
     purposes = models.ManyToManyField(Purpose, related_name='flowers')
+    
