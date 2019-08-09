@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 from core.models import (Purpose, Color)
 import logging
@@ -54,6 +55,7 @@ class User(AbstractBaseUser):
     color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    date_joined = models.DateTimeField(default=timezone.now)
 
     objects = UserManager()
 

@@ -1,11 +1,10 @@
-from .views import signup
-from .views import signinView
-from django.urls import path
+from rest_framework.routers import DefaultRouter
+from rest_framework_simplejwt.views import (TokenRefreshView, TokenVerifyView,)
+from django.urls import path, include
+from .views import signup, signinView, UserViewSet
 
-from rest_framework_simplejwt.views import (
-    TokenRefreshView,
-    TokenVerifyView,
-)
+router = DefaultRouter()
+router.register(r'users', UserViewSet, basename='user')
 
 urlpatterns = [
     path('signin', signinView.as_view(), name='token_obtain_pair'),
