@@ -19,6 +19,6 @@ urlpatterns = [
     path('', include(router.urls)),
 
     #commentlist url config 
-    path('users/<int:id>/comments', FlowerCommentList.as_view())
-    path('flowers/<int:id>/comments', UserCommentList.as_view())
+    path('users/<int:id>/comments', UserCommentList.as_view()),
+    path('flowers/<int:id>/comments', FlowerCommentList.as_view())
 ]

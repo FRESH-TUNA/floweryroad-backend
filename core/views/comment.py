@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 import floweryroad.settings.base as settings
 
+from flauth.models import User
 from core.models import Comment, Flower
 from core.serializers.comment import CommentListSerializer
 from core.paginators.comment import CommentPaginator
@@ -27,7 +28,7 @@ class UserCommentList(APIView):
     
     def get(self, request, id):        
         paginator = CommentPaginator()
-        comments = Comment.objects.all().filter(user=settings.AUTH_USER_MODEL.objects.get(id=id))
+        comments = Comment.objects.all().filter(user=User.objects.get(id=id))
         comments = paginator.paginate_queryset(comments, request)
         serializer = CommentListSerializer(comments, context={'request':request}, many=True)
         return paginator.get_paginated_response(serializer.data)
