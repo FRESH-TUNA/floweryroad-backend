@@ -55,7 +55,7 @@ class User(AbstractBaseUser):
     color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    deta_joined = models.DateTimeField(default=timezone.now)
+    date_joined = models.DateTimeField(default=timezone.now)
 
     objects = UserManager()
 
