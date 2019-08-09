@@ -2,7 +2,7 @@ import floweryroad.settings.base as settings
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from . import Purpose, Color, Language, Flower
-
+import logging
 
 class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -13,5 +13,5 @@ class Comment(models.Model):
 
     @property
     def like(self):
-        return self.comment_likes.objects.count()
+        return self.comment_likes.count()
     
