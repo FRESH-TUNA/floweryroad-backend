@@ -4,10 +4,10 @@ from . import Purpose, Color, Language
 
 class Flower(models.Model):
     SEASON = (
-        (0, 'Spring'),
-        (1, 'Summer'),
-        (2, 'Fall'),
-        (3, 'Winter'),
+        (1, 'Spring'),
+        (2, 'Summer'),
+        (3, 'Fall'),
+        (4, 'Winter'),
     )
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=200)
