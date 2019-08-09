@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from core.models import Color, Language, Image, Flower
 from core.serializers import PurposeSerializer
+from django.db.models import Avg, F
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -25,11 +26,15 @@ class _FlowerSerializer(serializers.ModelSerializer):
     languages = LanguageSerializer(many=True, read_only=True)
     colors = ColorSerializer(many=True, read_only=True)
     purposes = PurposeSerializer(many=True, read_only=True)
+    star = serializers.SerializerMethodField()
 
     class Meta:
         model = Flower
         fields = ['id', 'name', 'description',
                   'season', 'languages', 'colors', 'purposes']
+
+    def get_star(self, obj):
+        return obj.comments.aggregate(avgs=Avg(F('star'))).get('avgs', None)
 
 
 class FlowerListSerializer(_FlowerSerializer):
@@ -37,8 +42,7 @@ class FlowerListSerializer(_FlowerSerializer):
 
     class Meta:
         model = Flower
-        fields = ['id', 'name', 'description', 'image',
-                  'season', 'languages', 'colors', 'purposes']
+        fields = ['id', 'name', 'purposes', 'image', 'star',]
 
     def get_thumbnail(self, obj):
         image = ImageSerializer(obj.images.first(), context={
