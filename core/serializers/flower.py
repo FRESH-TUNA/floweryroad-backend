@@ -2,10 +2,12 @@ from rest_framework import serializers
 from core.models import Color, Language, Flower
 from core.serializers import PurposeSerializer
 
+
 class ColorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Color
         fields = '__all__'
+
 
 class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,4 +22,5 @@ class FlowerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Flower
-        fields = ['id', 'name', 'description', 'season', 'languages', 'colors', 'purposes']
+        fields = ['id', 'name', 'description',
+                  'season', 'languages', 'colors', 'purposes']
