@@ -14,8 +14,8 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ['id', 'user', 'content', 'star',
-                  'created_at', 'like', 'is_like', 'flower']
+        fields = ['id', 'content', 'star',
+                  'created_at', 'like', 'is_like', 'user', 'flower']
 
     def get_is_like(self, obj):
         like_comment = CommentLike.objects.all().filter(
