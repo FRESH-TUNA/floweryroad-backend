@@ -7,15 +7,14 @@ from . import CommentFlowerSerializer
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    is_like = serializers.SerializerMethodField()
     user = UserNicknameSerializer(read_only=True)
-    is_like = serializers.SerializerMethodField(
-        'get_is_like')  # custom 필드는 이렇게
     flower = CommentFlowerSerializer(read_only=True)
 
     class Meta:
         model = Comment
-        fields = ['id', 'user', 'content', 'star',
-                  'created_at', 'like', 'is_like', 'flower']
+        fields = ['id', 'content', 'star',
+                  'created_at', 'like', 'is_like', 'user', 'flower']
 
     def get_is_like(self, obj):
         like_comment = CommentLike.objects.all().filter(
