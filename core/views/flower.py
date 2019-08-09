@@ -11,12 +11,13 @@ from core.paginators import FlowerPaginator
 class FlowerFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains')
     color = django_filters.NumberFilter(field_name='colors__id')
-    language = django_filters.CharFilter(field_name='languages__name')
     purpose = django_filters.CharFilter(field_name='purposes__name')
+    language = django_filters.CharFilter(field_name='languages__name')
+    birth = django_filters.NumberFilter(field_name='births__date', lookup_expr='month')
 
     class Meta:
         model = Flower
-        fields = ['name', 'color', 'purpose', 'language', 'season']
+        fields = ['name', 'color', 'purpose', 'language', 'season', 'birth']
 
 
 class FlowerViewSet(viewsets.ReadOnlyModelViewSet):
