@@ -1,5 +1,5 @@
-import logging
 from django.db import models
+from django.db.models import Avg
 from . import Purpose, Color, Language
 
 class Flower(models.Model):
@@ -19,7 +19,3 @@ class Flower(models.Model):
     def __str__(self):
         return self.name
     
-    @property
-    def season_name(self):
-        season_list = [x[1] for x in self.SEASON]
-        return season_list[self.season]

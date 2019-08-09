@@ -5,3 +5,5 @@ from .flower import Flower
 from .image import Image
 from .comment import Comment
 from .comment_like import CommentLike
+from .view import View
+from .birth import Birth
