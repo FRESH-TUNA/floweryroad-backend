@@ -8,7 +8,7 @@ from core.serializers import FlowerListSerializer, FlowerDetailSerializer
 from core.paginators import FlowerPaginator
 
 from django.db.models import Avg, Count
-
+import logging
 
 class FlowerFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains')
@@ -31,7 +31,7 @@ class FlowerViewSet(viewsets.ReadOnlyModelViewSet):
 
     # 전체 검색(icontains)
     search_fields = ['name', 'description',
-                     'languages__name', 'purposes__name']
+                    'languages__name', 'purposes__name']
 
     # 특정 필드 검색
     filter_class = FlowerFilter
@@ -39,18 +39,20 @@ class FlowerViewSet(viewsets.ReadOnlyModelViewSet):
     # 정렬 기준
     # ordering_fields = ('star',)
 
-    def get_queryset(self):
-        ordering = self.request.GET.get('ordering', '')
-        if ordering:
-            # 별점 순 정렬
-            if ordering.endswith('star'):
-                queryset = Flower.objects.annotate(
-                    star=Avg('comments__star')).order_by(ordering)
-                return queryset
-            elif ordering.endswith('view'):
-                queryset = Flower.objects.annotate(
-                    view=Count('views')).order_by(ordering)
-                return queryset
+    # def get_queryset(self):
+    #     # ordering = self.request.GET.get('ordering', '')
+    #     if ordering:
+    #         # 별점 순 정렬
+    #         if ordering.endswith('star'):
+    #             queryset = Flower.objects.annotate(
+    #                 star=Avg('comments__star')).order_by(ordering)
+    #             logging.error(queryset)
+    #             return queryset
+    #         elif ordering.endswith('view'):
+    #             queryset = Flower.objects.annotate(
+    #                 view=Count('views')).order_by(ordering)
+    #             logging.error(queryset)
+    #             return queryset
 
     def get_serializer_class(self):
         if self.action == 'list':

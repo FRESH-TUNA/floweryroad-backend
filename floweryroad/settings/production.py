@@ -13,7 +13,7 @@ SECRET_KEY = config_secret['SECRET_KEY']
 ROOT_URLCONF = 'floweryroad.urls.production'
 
 ALLOWED_HOSTS = [
-    '127.0.0.1:3000',
+    '127.0.0.1',
     'ec2-15-164-210-94.ap-northeast-2.compute.amazonaws.com',
 ]
 
