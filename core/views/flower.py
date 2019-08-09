@@ -9,21 +9,15 @@ from core.paginators import FlowerPaginator
 
 
 class FlowerFilter(django_filters.FilterSet):
-    name = django_filters.CharFilter(method='icontains_filter')
-    languages = django_filters.CharFilter(method='name_filter')
-    purposes = django_filters.CharFilter(method='name_filter')
+    name = django_filters.CharFilter(lookup_expr='icontains')
+    color = django_filters.NumberFilter(field_name='colors__id')
+    language = django_filters.CharFilter(field_name='languages__name')
+    purpose = django_filters.CharFilter(field_name='purposes__name')
 
     class Meta:
         model = Flower
-        fields = ['name', 'season', 'languages', 'colors', 'purposes']
+        fields = ['name', 'season', 'language', 'color', 'purpose']
 
-    def icontains_filter(self, queryset, key, value):
-        key += '__icontains'
-        return queryset.filter(**{key: value, })
-
-    def name_filter(self, queryset, key, value):
-        key += '__name'
-        return queryset.filter(**{key: value, })
 
 
 class FlowerViewSet(viewsets.ReadOnlyModelViewSet):
