@@ -1,6 +1,7 @@
 from rest_framework import viewsets, mixins
 from rest_framework.response import Response
-from core.models import Comment
+from core.models import Comment, CommentLike, Flower
+from flauth.models import User
 from core.serializers import CommentSerializer
 
 class _CommentViewSet():
@@ -9,19 +10,25 @@ class _CommentViewSet():
 
 
 class CommentFlowerViewSet(_CommentViewSet, viewsets.ModelViewSet):
-    pass
+    def get_queryset(self):
+        flower = Flower.objects.get(pk=self.kwargs['flower_pk'])
+        return Comment.objects.filter(flower=flower)
+
+    def perform_create(self, serializer):
+        flower = Flower.objects.get(pk=self.kwargs['flower_pk'])
+        serializer.save(user=self.request.user, flower=flower)
 
 
 class CommentUserViewSet(_CommentViewSet, viewsets.ReadOnlyModelViewSet):
-    pass
+    def get_queryset(self):
+        user = User.objects.get(pk=self.kwargs['user_pk'])
+        return Comment.objects.filter(user=user)
 
 
 class CommentLikeViewSet(_CommentViewSet, viewsets.ReadOnlyModelViewSet):
-    pass
-
-class PurposeViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = Purpose.objects.all()
-    serializer_class = PurposeSerializer
+    def get_queryset(self):
+        user = User.objects.get(pk=self.kwargs['user_pk'])
+        return Comment.objects.filter(commentlike__user=user, commentlike__like=True)
 
 
 
@@ -34,41 +41,40 @@ class PurposeViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 
 
+# from rest_framework import status
+# from rest_framework.views import APIView
+# import floweryroad.settings.base as settings
 
-from rest_framework import status
-from rest_framework.views import APIView
-import floweryroad.settings.base as settings
+# from flauth.models import User
+# from core.models import Comment, Flower
+# from core.serializers.comment import CommentListSerializer
+# from core.paginators.comment import CommentPaginator
 
-from flauth.models import User
-from core.models import Comment, Flower
-from core.serializers.comment import CommentListSerializer
-from core.paginators.comment import CommentPaginator
+# # from jockbo.apps.common.models import Post, Comment
+# # from jockbo.apps.common.permissions import IsOwnerOrReadOnly
+# from rest_framework.response import Response
+# from django.shortcuts import get_object_or_404
 
-# from jockbo.apps.common.models import Post, Comment
-# from jockbo.apps.common.permissions import IsOwnerOrReadOnly
-from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
+# # from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-# from rest_framework.permissions import IsAuthenticatedOrReadOnly
+# class FlowerCommentList(APIView):
+#     # permission_classes = (IsAuthenticatedOrReadOnly,)
+#     def get(self, request, id):        
+#         paginator = CommentPaginator()
+#         comments = Comment.objects.all().filter(flower=Flower.objects.get(id=id))
+#         comments = paginator.paginate_queryset(comments, request)
+#         serializer = CommentListSerializer(comments, context={'request':request}, many=True)
+#         return paginator.get_paginated_response(serializer.data)
 
-class FlowerCommentList(APIView):
-    # permission_classes = (IsAuthenticatedOrReadOnly,)
-    def get(self, request, id):        
-        paginator = CommentPaginator()
-        comments = Comment.objects.all().filter(flower=Flower.objects.get(id=id))
-        comments = paginator.paginate_queryset(comments, request)
-        serializer = CommentListSerializer(comments, context={'request':request}, many=True)
-        return paginator.get_paginated_response(serializer.data)
-
-class UserCommentList(APIView):
-        # permission_classes = (IsAuthenticatedOrReadOnly,)
+# class UserCommentList(APIView):
+#         # permission_classes = (IsAuthenticatedOrReadOnly,)
     
-    def get(self, request, id):        
-        paginator = CommentPaginator()
-        comments = Comment.objects.all().filter(user=User.objects.get(id=id))
-        comments = paginator.paginate_queryset(comments, request)
-        serializer = CommentListSerializer(comments, context={'request':request}, many=True)
-        return paginator.get_paginated_response(serializer.data)
+#     def get(self, request, id):        
+#         paginator = CommentPaginator()
+#         comments = Comment.objects.all().filter(user=User.objects.get(id=id))
+#         comments = paginator.paginate_queryset(comments, request)
+#         serializer = CommentListSerializer(comments, context={'request':request}, many=True)
+#         return paginator.get_paginated_response(serializer.data)
 
 
 
