@@ -3,10 +3,12 @@ from rest_framework.response import Response
 from core.models import Comment, CommentLike, Flower
 from flauth.models import User
 from core.serializers import CommentSerializer
+from core.paginators import CommentPaginator
 
 class _CommentViewSet():
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    pagination_class = CommentPaginator
 
 
 class CommentFlowerViewSet(_CommentViewSet, viewsets.ModelViewSet):

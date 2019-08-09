@@ -1,5 +1,7 @@
 from rest_framework.pagination import PageNumberPagination
 
-class CommentPaginator(PageNumberPagination):
-    page_size = 1
+class FlowerPaginator(PageNumberPagination):
+    page_size = 10
     
+class CommentPaginator(PageNumberPagination):
+    page_size = 4

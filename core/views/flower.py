@@ -5,6 +5,7 @@ import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
 from core.models import Flower
 from core.serializers import FlowerListSerializer, FlowerDetailSerializer
+from core.paginators import FlowerPaginator
 
 
 class FlowerFilter(django_filters.FilterSet):
@@ -28,6 +29,7 @@ class FlowerFilter(django_filters.FilterSet):
 class FlowerViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Flower.objects.all()
     serializer_class = FlowerListSerializer
+    pagination_class = FlowerPaginator
     # filter_backends = (SearchFilter, DjangoFilterBackend, OrderingFilter)
     filter_backends = (SearchFilter, DjangoFilterBackend,)
 
