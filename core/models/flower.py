@@ -1,4 +1,3 @@
-import logging
 from django.db import models
 from . import Purpose, Color, Language
 
