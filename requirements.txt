@@ -8,6 +8,7 @@ django-storages==1.7.1
 djangorestframework==3.10.2
 djangorestframework-simplejwt==4.3.0
 docutils==0.14
+drf-nested-routers==0.91
 isort==4.3.21
 jmespath==0.9.4
 lazy-object-proxy==1.4.1
