@@ -7,9 +7,8 @@ from . import CommentFlowerSerializer
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    is_like = serializers.SerializerMethodField()
     user = UserNicknameSerializer(read_only=True)
-    is_like = serializers.SerializerMethodField(
-        'get_is_like')  # custom 필드는 이렇게
     flower = CommentFlowerSerializer(read_only=True)
 
     class Meta:
