@@ -1,7 +1,11 @@
 from rest_framework import serializers
-from core.models import Comme
+from core.models import Comment
 
-class PurposeSerializer(serializers.ModelSerializer):
+class CommentListSerializer(serializers.ModelSerializer):
+    username = UsernameSerializer(read_only=True)
+    is_like = serializers.PrimaryKeyRelatedField()
+    flower = FlowerForCommentListSerializer(read_only=True)
+
     class Meta:
-        model = Purpose
-        fields = ['id', 'name', 'image']
+        model = Comment
+        fields = ['id', 'content', 'star', 'created_at', 'like']

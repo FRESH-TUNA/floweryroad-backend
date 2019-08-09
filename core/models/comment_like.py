@@ -14,4 +14,3 @@ class Comment(models.Model):
     @property
     def like(self):
         return self.likes.objects.count()
-    
