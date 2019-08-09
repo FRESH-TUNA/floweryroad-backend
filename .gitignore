@@ -142,3 +142,4 @@ dmypy.json
 .config/
 .vscode/
 media/
+mydatabase
