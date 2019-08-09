@@ -3,6 +3,8 @@ from core.models import Comment, CommentLike
 
 from flauth.serializers.user import UserNicknameSerializer
 from core.serializers.flower import FlowerForCommentListSerializer
+
+import logging
 #is_like 접속한 유저가 해당 댓글에 좋아요 여부
 
 class CommentListSerializer(serializers.ModelSerializer):
@@ -18,7 +20,9 @@ class CommentListSerializer(serializers.ModelSerializer):
         comment_likes = CommentLike.objects.all().filter(comment=obj)
         user_comment_like = comment_likes.filter(user=self.context['request'].user)
 
-        if user_comment_like is None:
+        if user_comment_like.count() is 0:
             return False
-        else:
+        elif user_comment_like[0].like is True:
             return True
+        else:
+            return False

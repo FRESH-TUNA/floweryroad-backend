@@ -13,5 +13,6 @@ class Comment(models.Model):
 
     @property
     def like(self):
+        #좋아요를 취소하면 반드시 지운다고 가정하여 설계했음
         return self.comment_likes.count()
     
