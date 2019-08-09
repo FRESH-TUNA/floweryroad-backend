@@ -39,18 +39,18 @@ class FlowerViewSet(viewsets.ReadOnlyModelViewSet):
     # 정렬 기준
     # ordering_fields = ('star',)
 
-    def get_queryset(self):
-        ordering = self.request.GET.get('ordering', '')
-        if ordering:
-            # 별점 순 정렬
-            if ordering.endswith('star'):
-                queryset = Flower.objects.annotate(
-                    star=Avg('comments__star')).order_by(ordering)
-                return queryset
-            elif ordering.endswith('view'):
-                queryset = Flower.objects.annotate(
-                    view=Count('views')).order_by(ordering)
-                return queryset
+    # def get_queryset(self):
+    #     ordering = self.request.GET.get('ordering', '')
+    #     if ordering:
+    #         # 별점 순 정렬
+    #         if ordering.endswith('star'):
+    #             queryset = Flower.objects.annotate(
+    #                 star=Avg('comments__star')).order_by(ordering)
+    #             return queryset
+    #         elif ordering.endswith('view'):
+    #             queryset = Flower.objects.annotate(
+    #                 view=Count('views')).order_by(ordering)
+    #             return queryset
 
     def get_serializer_class(self):
         if self.action == 'list':
