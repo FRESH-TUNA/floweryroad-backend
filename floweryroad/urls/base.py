@@ -6,7 +6,7 @@ from core.urls import router as core_router
 from flauth.urls import router as flauth_router
 
 #test commentlist 
-from core.views.comment import CommentList
+from core.views.comment import FlowerCommentList, UserCommentList
 
 router = DefaultRouter()
 router.registry.extend(core_router.registry)
@@ -18,6 +18,7 @@ urlpatterns = [
     path('', include('flauth.urls')),
     path('', include(router.urls)),
 
-    #test commentlist 
-    path('comments', CommentList.as_view())
+    #commentlist url config 
+    path('users/<int:id>/comments', UserCommentList.as_view()),
+    path('flowers/<int:id>/comments', FlowerCommentList.as_view())
 ]
