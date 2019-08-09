@@ -1,7 +1,7 @@
 astroid==2.2.5
 autopep8==1.4.4
-boto3==1.9.203
-botocore==1.12.203
+boto3==1.9.204
+botocore==1.12.204
 Django==2.2.4
 django-filter==2.2.0
 django-storages==1.7.1

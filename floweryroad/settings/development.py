@@ -27,3 +27,4 @@ DATABASES = {
         'PORT': config_devdb_secret['db']['PORT'],
     }
 }
+
