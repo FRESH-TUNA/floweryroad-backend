@@ -16,8 +16,7 @@ class FlowerFilter(django_filters.FilterSet):
 
     class Meta:
         model = Flower
-        fields = ['name', 'season', 'language', 'color', 'purpose']
-
+        fields = ['name', 'color', 'purpose', 'language', 'season']
 
 
 class FlowerViewSet(viewsets.ReadOnlyModelViewSet):
