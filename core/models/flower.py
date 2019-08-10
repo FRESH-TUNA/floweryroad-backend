@@ -1,6 +1,7 @@
 from django.db import models
-from django.db.models import Avg
+from django.db.models import Avg, F
 from . import Purpose, Color, Language
+import logging
 
 class Flower(models.Model):
     SEASON = (
@@ -18,4 +19,8 @@ class Flower(models.Model):
 
     def __str__(self):
         return self.name
+
+    # @property
+    # def star(self):
+    #     return self.comments.aggregate(avgs=Avg(F('star'))).get('avgs', None)
     

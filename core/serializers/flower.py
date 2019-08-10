@@ -44,8 +44,7 @@ class FlowerListSerializer(_FlowerSerializer):
         fields = ['id', 'name', 'purposes', 'image', 'star', ]
 
     def get_thumbnail(self, obj):
-        image = ImageSerializer(obj.images.first(), context={
-                                'request': self.context['request']})
+        image = ImageSerializer(obj.images.first())
         return image.data
 
 
