@@ -31,11 +31,11 @@ class FlowerViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (SearchFilter, DjangoFilterBackend)
 
     # 전체 검색(icontains)
-    # search_fields = ['name', 'description',
-    #                 'languages__name', 'purposes__name']
+    search_fields = ['name', 'description',
+                    'languages__name', 'purposes__name']
 
     # 특정 필드 검색
-    # filter_class = FlowerFilter
+    filter_class = FlowerFilter
 
     # # 정렬 기준
     # ordering_fields = ('name',)
