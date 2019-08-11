@@ -17,9 +17,10 @@ class CommentSerializer(serializers.ModelSerializer):
                   'created_at', 'like', 'is_like', 'user', 'flower']
 
     def get_is_like(self, obj):
-        like_comment = CommentLike.objects.all().filter(
-            comment=obj, user=self.context['request'].user).first()
+        if self.context['request'].user.is_authenticated:
+            like_comment = CommentLike.objects.all().filter(
+                comment=obj, user=self.context['request'].user).first()
 
-        if like_comment:
-            return like_comment.like
+            if like_comment:
+                return True
         return False

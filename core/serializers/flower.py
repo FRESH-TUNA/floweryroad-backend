@@ -2,7 +2,7 @@ from rest_framework import serializers
 from core.models import Color, Language, Image, Flower
 from core.serializers import PurposeSerializer
 from django.db.models import Avg, F
-
+import logging
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,7 +34,6 @@ class _FlowerSerializer(serializers.ModelSerializer):
 
     def get_star(self, obj):
         return obj.comments.aggregate(avgs=Avg(F('star'))).get('avgs', None)
-
 
 class FlowerListSerializer(_FlowerSerializer):
     image = serializers.SerializerMethodField('get_thumbnail')
