@@ -6,7 +6,7 @@ CONFIG_SECRET_DIR = os.path.join(BASE_DIR, '.credential')
 CONFIG_SETTINGS_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'credentials.json')
 config_secret = json.loads(open(CONFIG_SETTINGS_COMMON_FILE).read())
 
-DEBUG = True
+DEBUG = False
 
 SECRET_KEY = config_secret['SECRET_KEY']
 
@@ -15,6 +15,11 @@ ROOT_URLCONF = 'floweryroad.urls.production'
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'ec2-15-164-210-94.ap-northeast-2.compute.amazonaws.com',
+]
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+    "http://floweryroad.s3-website.ap-northeast-2.amazonaws.com"
 ]
 
 #AWS SETTING
