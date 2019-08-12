@@ -26,14 +26,14 @@ class _FlowerSerializer(serializers.ModelSerializer):
     languages = LanguageSerializer(many=True, read_only=True)
     colors = ColorSerializer(many=True, read_only=True)
     purposes = PurposeSerializer(many=True, read_only=True)
-    star = serializers.SerializerMethodField()
+    star = serializers.FloatField()
 
     class Meta:
         model = Flower
         fields = ['id', 'name', 'purposes', 'image', 'star', ]
 
-    def get_star(self, obj):
-        return obj.comments.aggregate(avgs=Avg(F('star'))).get('avgs', None)
+    # def get_star(self, obj):
+    #     return obj.comments.aggregate(avgs=Avg(F('star'))).get('avgs', None)
 
 class FlowerListSerializer(_FlowerSerializer):
     image = serializers.SerializerMethodField('get_thumbnail')
