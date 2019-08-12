@@ -1,16 +1,26 @@
 from django.db import models
+from django.db.models import Avg, F
 from . import Purpose, Color, Language
+import logging
 
 class Flower(models.Model):
     SEASON = (
-        (1, 'Spring'),
-        (2, 'Summer'),
-        (3, 'Fall'),
-        (4, 'Winter'),
+        (0, '봄'),
+        (1, '여름'),
+        (2, '가을'),
+        (3, '겨울'),
     )
     name = models.CharField(max_length=20)
-    description = models.CharField(max_length=200)
+    description = models.TextField()
     season = models.IntegerField(default=1, choices=SEASON)
     languages = models.ManyToManyField(Language, related_name='flowers')
     colors = models.ManyToManyField(Color, related_name='flowers')
     purposes = models.ManyToManyField(Purpose, related_name='flowers')
+
+    def __str__(self):
+        return self.name
+
+    # @property
+    # def star(self):
+    #     return self.comments.aggregate(avgs=Avg(F('star'))).get('avgs', None)
+    

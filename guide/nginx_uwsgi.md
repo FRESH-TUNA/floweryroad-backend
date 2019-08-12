@@ -16,3 +16,6 @@
 - sudo systemctl enable uwsgi
   sudo systemctl daemon-reload
   sudo systemctl restart uwsgi nginx
+
+6. 
+- uwsgi --http :8000 --home <가상환경폴더위치> --chdir <프로젝트폴더위치> -w floweryroad.wsgi

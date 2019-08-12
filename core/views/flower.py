@@ -1,51 +1,63 @@
-from rest_framework import status
-from rest_framework.views import APIView
+from rest_framework import viewsets, mixins
+from rest_framework.response import Response
+from rest_framework.filters import SearchFilter, OrderingFilter
+import django_filters
+from django_filters.rest_framework import DjangoFilterBackend
+from django.db.models import Avg, Count
+import logging
 
 from core.models import Flower
-from core.serializers.flowerSerializers import FlowerListSerializer
-# from jockbo.apps.common.models import Post, Comment
-# from jockbo.apps.common.permissions import IsOwnerOrReadOnly
-from rest_framework.response import Response
-# from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from core.serializers import FlowerListSerializer, FlowerDetailSerializer
+from core.paginators import FlowerPaginator
 
-class FlowerList(APIView):
-    # permission_classes = (IsAuthenticatedOrReadOnly,)
 
-    def get(self, request):
-        flowers = Flower.objects.all()
-        serializer = FlowerListSerializer(flowers, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+class FlowerFilter(django_filters.FilterSet):
+    name = django_filters.CharFilter(lookup_expr='icontains')
+    color = django_filters.NumberFilter(field_name='colors__id')
+    purpose = django_filters.CharFilter(field_name='purposes__name')
+    language = django_filters.CharFilter(field_name='languages__name')
+    birth = django_filters.NumberFilter(
+        field_name='births__date', lookup_expr='month')
 
-    def post(self, request, postPk=None):
-        serializer = CommentSerializer(data=request.data)
-        try:
-            serializer.is_valid()
-            serializer.save(user=request.user, post=Post.objects.get(id=postPk))
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        except:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+    class Meta:
+        model = Flower
+        fields = ['name', 'color', 'purpose', 'language', 'season', 'birth']
 
-class FlowerDetail(APIView):
-    def get_object(self, commentPk):
-        return Comment.objects.get(id=commentPk)
 
-    def put(self, request, commentPk, format=None):
-        try:
-            comment = self.get_object(commentPk)
-            serializer = CommentSerializer(comment, data=request.data)
-            serializer.is_valid()
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        except Comment.DoesNotExist:  
-            return Response({'error':'comment is not existed'}, status=status.HTTP_400_BAD_REQUEST)
-        except:  
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class FlowerViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Flower.objects.all()
+    # serializer_class = FlowerListSerializer
+    pagination_class = FlowerPaginator
+    filter_backends = (SearchFilter, DjangoFilterBackend)
 
-    def delete(self, request, commentPk, format=None):
-        try:
-            snippet = self.get_object(commentPk)
-            snippet.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except:
-            return Response({'error':'comment is not existed'}, status=status.HTTP_400_BAD_REQUEST)
+    # 전체 검색(icontains)
+    search_fields = ['name', 'description',
+                    'languages__name', 'purposes__name']
+
+    # 특정 필드 검색
+    filter_class = FlowerFilter
+
+    # # 정렬 기준
+    # ordering_fields = ('name',)
+
+    def get_queryset(self):
+        ordering = self.request.GET.get('ordering', '')
+        if ordering:
+            # 별점 순 정렬
+            if ordering.endswith('star'):
+                queryset = Flower.objects.annotate(
+                    star=Avg('comments__star')).order_by(ordering)
+                return queryset
+            elif ordering.endswith('view'):
+                queryset = Flower.objects.annotate(
+                    view=Count('views')).order_by(ordering)
+                return queryset
+        return self.queryset
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return FlowerListSerializer
+        elif self.action == 'retrieve':
+            return FlowerDetailSerializer
+        else:
+            return FlowerListSerializer
