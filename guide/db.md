@@ -1,1 +1,1 @@
-pg_dump -h floweryroad.cognhddac7uv.ap-northeast-2.rds.amazonaws.com -U floweryroadAdmin  -f floweryroad.sql
+pg_dump -h <db-dns> -U <db-name>  -f floweryroad.sql
