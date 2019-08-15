@@ -17,6 +17,7 @@ router.registry.extend(flauth_router.registry)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('flauth.urls')),
     path('', include(router.urls)),
     path('', include(core_flowers_router.urls)),
     path('', include(flauth_users_router.urls)),
