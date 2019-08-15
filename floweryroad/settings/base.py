@@ -20,6 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(
 
 ALLOWED_HOSTS = []
 
+# APPEND_SLASH=False
+
 # Application definition
 PROJECT_APPS = [
     'flauth',
@@ -40,7 +42,12 @@ INSTALLED_APPS = PROJECT_APPS + [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['rest_framework.filters.SearchFilter', 'rest_framework.filters.OrderingFilter', 'django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': ['rest_framework.filters.SearchFilter', 'rest_framework.filters.OrderingFilter', 'django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+    ]
 }
 
 MIDDLEWARE = [

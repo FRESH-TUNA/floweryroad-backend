@@ -1,9 +1,10 @@
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets, mixins, status
 from rest_framework.response import Response
 from core.models import Comment, CommentLike, Flower
 from flauth.models import User
-from core.serializers import CommentSerializer
+from core.serializers import CommentSerializer, CommentCreateSerializer
 from core.paginators import CommentPaginator
+import logging 
 
 class _CommentViewSet():
     queryset = Comment.objects.all()
@@ -16,9 +17,17 @@ class CommentFlowerViewSet(_CommentViewSet, viewsets.ModelViewSet):
         flower = Flower.objects.get(pk=self.kwargs['flower_pk'])
         return Comment.objects.filter(flower=flower)
 
-    def perform_create(self, serializer):
-        flower = Flower.objects.get(pk=self.kwargs['flower_pk'])
-        serializer.save(user=self.request.user, flower=flower)
+    def perform_create(self, serializer, flower_pk):
+        flower = Flower.objects.get(pk=flower_pk)
+        if serializer.is_valid():
+            serializer.save(user=self.request.user, flower=flower)
+        else:
+            raise Exception(serializer.errors)
+
+    def create(self, request, flower_pk):
+        serializer = CommentCreateSerializer(data=request.data)
+        self.perform_create(serializer, flower_pk)
+        return self.list(request)
 
 
 class CommentUserViewSet(_CommentViewSet, viewsets.ReadOnlyModelViewSet):

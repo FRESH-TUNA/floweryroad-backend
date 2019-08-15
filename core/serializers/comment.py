@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from core.models import Comment, CommentLike
+from django.core.validators import MaxValueValidator, MinValueValidator
 
+from core.models import Comment, CommentLike
 from flauth.serializers.user import UserNicknameSerializer
 from . import CommentFlowerSerializer
-# is_like 접속한 유저가 해당 댓글에 좋아요 여부
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -24,3 +24,11 @@ class CommentSerializer(serializers.ModelSerializer):
             if like_comment:
                 return True
         return False
+
+
+class CommentCreateSerializer(serializers.Serializer):
+    content = serializers.CharField(max_length=200, allow_blank=True)
+    star = serializers.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5.0)], default=0.0)
+
+    def create(self, validated_data):
+        return Comment.objects.create(**validated_data)
