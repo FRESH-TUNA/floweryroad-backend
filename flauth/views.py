@@ -15,6 +15,8 @@ class UserViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+class signinView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
 
 @api_view(['POST'])
 @parser_classes([JSONParser])
@@ -32,5 +34,4 @@ def signup(request):
         return Response({"error: repeat password is not correct"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class signinView(TokenObtainPairView):
-    serializer_class = CustomTokenObtainPairSerializer
+
