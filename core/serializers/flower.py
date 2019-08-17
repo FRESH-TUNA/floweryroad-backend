@@ -28,7 +28,7 @@ class _FlowerSerializer(serializers.ModelSerializer):
     languages = LanguageSerializer(many=True, read_only=True)
     colors = ColorSerializer(many=True, read_only=True)
     purposes = PurposeSerializer(many=True, read_only=True)
-    star = serializers.FloatField(required=False)
+    star = serializers.FloatField()
 
     class Meta:
         model = Flower
