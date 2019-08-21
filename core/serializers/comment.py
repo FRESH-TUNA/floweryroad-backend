@@ -2,12 +2,13 @@ from rest_framework import serializers
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 from core.models import Comment, CommentLike
-from flauth.serializers.user import UserNicknameSerializer
-from . import CommentFlowerSerializer
 
+from flauth.serializers import UserNicknameSerializer
+from . import CommentFlowerSerializer
+import logging
 
 class CommentSerializer(serializers.ModelSerializer):
-    is_like = serializers.SerializerMethodField()
+    is_like = serializers.SerializerMethodField('get_is_like')
     user = UserNicknameSerializer(read_only=True)
     flower = CommentFlowerSerializer(read_only=True)
 
@@ -18,10 +19,10 @@ class CommentSerializer(serializers.ModelSerializer):
 
     def get_is_like(self, obj):
         if self.context['request'].user.is_authenticated:
+            
             like_comment = CommentLike.objects.all().filter(
                 comment=obj, user=self.context['request'].user).first()
-
-            if like_comment:
+            if like_comment:    
                 return True
         return False
 

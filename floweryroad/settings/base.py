@@ -26,8 +26,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 PROJECT_APPS = [
-    'flauth',
     'core',
+    'flauth',
 ]
 
 INSTALLED_APPS = PROJECT_APPS + [
@@ -52,7 +52,7 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
-    'REFRESH_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(minutes=60),
 }
 
 MIDDLEWARE = [

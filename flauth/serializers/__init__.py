@@ -1,2 +1,2 @@
 from .auth import CustomTokenObtainPairSerializer
-from .user import UserSerializer
+from .user import UserSerializer, UserNicknameSerializer

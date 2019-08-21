@@ -34,7 +34,7 @@ class CommentViewTest(TestCase):
         )
 
         self.assertEqual(response.status_code, 206)
-        self.assertEqual(User.objects.get(id=1).nickname, 'freshTuna')
+        self.assertEqual(User.objects.get(email="logo@gmail.com").nickname, 'freshTuna')
 
     def test_change_password(self):
         c = Client()
