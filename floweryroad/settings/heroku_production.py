@@ -31,4 +31,4 @@ DATABASES['default'].update(db_from_env)
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = 'https://floweryroadapi.herokuapp.com/media/'
+MEDIA_URL = '/media/'
