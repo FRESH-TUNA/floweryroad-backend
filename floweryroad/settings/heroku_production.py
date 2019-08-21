@@ -7,7 +7,7 @@ DEBUG = False
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
-ROOT_URLCONF = 'floweryroad.urls.production'
+ROOT_URLCONF = 'floweryroad.urls.heroku_production'
 
 ALLOWED_HOSTS = [
     'floweryroadapi.herokuapp.com',
