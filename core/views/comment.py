@@ -16,7 +16,7 @@ class _CommentViewSet():
 class CommentFlowerViewSet(_CommentViewSet, viewsets.ModelViewSet):
     def get_queryset(self):
         flower = Flower.objects.get(pk=self.kwargs['flower_pk'])
-        return Comment.objects.filter(flower=flower)
+        return Comment.objects.filter(flower=flower).order_by('-created_at')
 
     def perform_create(self, serializer, flower_pk):
         flower = Flower.objects.get(pk=flower_pk)
