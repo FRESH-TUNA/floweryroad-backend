@@ -1,47 +1,34 @@
-import json
 from django.conf import settings
 from .base import *
-
-CONFIG_SECRET_DIR = os.path.join(BASE_DIR, '.credential')
-CONFIG_SETTINGS_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'credentials.json')
-config_secret = json.loads(open(CONFIG_SETTINGS_COMMON_FILE).read())
+import os
+import dj_database_url
 
 DEBUG = False
 
-SECRET_KEY = config_secret['SECRET_KEY']
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 ROOT_URLCONF = 'floweryroad.urls.production'
 
 ALLOWED_HOSTS = [
-    'floweryroad.herokuapp.com',
+    'floweryroadapi.herokuapp.com',
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
-    "http://floweryroad.s3-website.ap-northeast-2.amazonaws.com"
+    "https://floweryroad.herokuapp.com",
 ]
 
-#AWS SETTING
-AWS_ACCESS_KEY_ID = config_secret['aws']['access_key_id']
-AWS_SECRET_ACCESS_KEY = config_secret['aws']['secret_access_key']
-AWS_STORAGE_BUCKET_NAME = config_secret['aws']['s3_bucket_name']
-AWS_S3_SIGNATURE_VERSION = 's3v4'
-AWS_S3_REGION_NAME = 'ap-northeast-2'
-
-#Storage setting
-DEFAULT_FILE_STORAGE = 'floweryroad.settings.storage_config.MediaStorage'
-STATICFILES_STORAGE = 'floweryroad.settings.storage_config.StaticStorage'
-MEDIAFILES_LOCATION = 'media'
-STATICFILES_LOCATION = 'static'
-
+MIDDLEWARE += [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+]
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config_secret['db']['NAME'],
-        'USER': config_secret['db']['USER'],
-        'PASSWORD': config_secret['db']['PASSWORD'],
-        'HOST': config_secret['db']['HOST'],
-        'PORT': config_secret['db']['PORT'],
-    }
+    'default': {}
 }
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
