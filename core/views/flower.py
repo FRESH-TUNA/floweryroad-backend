@@ -3,13 +3,16 @@ from rest_framework.response import Response
 from rest_framework.filters import SearchFilter, OrderingFilter
 import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
-from django.db.models import Avg, Count
+from django.db.models import Avg, Count, Func
 import logging
 
 from core.models import Flower
 from core.serializers import FlowerListSerializer, FlowerDetailSerializer
 from core.paginators import FlowerPaginator
 
+class Round(Func):
+    function = "ROUND"
+    template = "%(function)s(%(expressions)s::numeric, 1)"
 
 class FlowerFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains')
@@ -40,19 +43,22 @@ class FlowerViewSet(viewsets.ReadOnlyModelViewSet):
     # # 정렬 기준
     # ordering_fields = ('name',)
 
+    
+    
     def get_queryset(self):
+        queryset = Flower.objects.annotate(
+            star=Round(Avg('comments__star')))
         ordering = self.request.GET.get('ordering', '')
         if ordering:
-            # 별점 순 정렬
             if ordering.endswith('star'):
-                queryset = Flower.objects.annotate(
-                    star=Avg('comments__star')).order_by(ordering)
+                queryset = queryset.order_by(ordering)
                 return queryset
             elif ordering.endswith('view'):
-                queryset = Flower.objects.annotate(
-                    view=Count('views')).order_by(ordering)
+                queryset = queryset.order_by(ordering)
                 return queryset
-        return self.queryset
+        else:
+            queryset = queryset.order_by('star')
+        return queryset
 
     def get_serializer_class(self):
         if self.action == 'list':

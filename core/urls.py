@@ -1,14 +1,19 @@
-from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_nested.routers import NestedSimpleRouter
 from .views import FlowerViewSet, PurposeViewSet, ColorViewSet
-from .views import CommentFlowerViewSet
+from .views import CommentFlowerViewSet, LikeView
 
 router = DefaultRouter()
 router.register(r'flowers', FlowerViewSet, basename='flower')
 router.register(r'purposes', PurposeViewSet, basename='purpose')
 router.register(r'colors', ColorViewSet, basename='color')
 
-flowers_router = NestedSimpleRouter(router, r'flowers', lookup='flower')
-flowers_router.register(r'comments', CommentFlowerViewSet, base_name='flower-comments')
+comments_router = NestedSimpleRouter(router, r'flowers', lookup='flower')
+comments_router.register(r'comments', CommentFlowerViewSet, base_name='flower-comments')
+
+urlpatterns = [
+    path('', include(router.urls)),
+    path('', include(comments_router.urls)),
+    path('comments/<int:pk>/likes', LikeView.as_view())
+]

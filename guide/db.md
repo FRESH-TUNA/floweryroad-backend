@@ -1,0 +1,1 @@
+pg_dump -h <db-dns> -U <db-name>  -f floweryroad.sql
