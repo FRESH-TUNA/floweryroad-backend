@@ -141,6 +141,6 @@ dmypy.json
 .credential/
 .config/
 .vscode/
-#media/
+media/
 mydatabase
 /floweryroad.sql
