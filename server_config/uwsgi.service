@@ -1,0 +1,16 @@
+[Unit]
+Description=EC2 Deploy uWSGI service
+After=syslog.target
+
+
+[Service]
+ExecStart=/home/ubuntu/.pyenv/versions/floweryroad/bin/uwsgi -i /srv/floweryroad-backend/.config/uwsgi.ini
+
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target

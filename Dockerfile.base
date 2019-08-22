@@ -1,0 +1,53 @@
+FROM        ubuntu:16.04
+MAINTAINER  lunacircle4@gmail.com
+
+#ubuntu update
+RUN         apt-get -y update
+RUN         apt-get -y dist-upgrade
+RUN         apt-get install -y python-pip git vim
+
+#volume
+VOLUME ["/data", "/etc/nginx/site-enabled", "/var/log/nginx"]
+
+# pyenv
+RUN         apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
+libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+xz-utils tk-dev
+RUN         curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+ENV         PATH /root/.pyenv/bin:$PATH
+RUN         pyenv install 3.6.4
+RUN         echo 'export PATH="/root/.pyenv/bin:$PATH"' >> ~/.zshrc
+RUN         echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+RUN         echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
+
+# zsh
+RUN         apt-get install -y zsh
+RUN         wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
+RUN         chsh -s /usr/bin/zsh
+
+# supervisord install
+RUN         apt-get -y install supervisor
+
+# git 
+RUN         apt-get install -y git
+
+# Nginx install
+RUN         apt-get -y install nginx
+
+#web service BL prepare
+RUN         pyenv virtualenv 3.6.4 floweryroad
+COPY        floweryroad/ /web/floweryroad-backend/
+COPY        media/ /web/floweryroad-backend/media/
+COPY        .credential/ /web/floweryroad-backend/.credential/
+RUN         /root/.pyenv/versions/floweryroad/bin/pip install -r ~/floweryroad-backend/requirements.txt
+
+#web service server prepare
+RUN         sudo cp -f /web/floweryroad-backend/ /etc/nginx/sites-available/nginx-app.conf
+RUN         sudo ln -sf /etc/nginx/sites-available/nginx-app.conf /etc/nginx/sites-enabled/nginx-app.conf
+RUN         sudo cp -f /srv/nginx_test/app/.config/uwsgi.service /etc/systemd/system/uwsgi.service
+
+#at run 
+CMD         systemctl enable uwsgi
+CMD         systemctl daemon-reload
+CMD         systemctl start uwsgi nginx
+
