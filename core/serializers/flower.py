@@ -24,64 +24,103 @@ class LanguageSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class _FlowerSerializer(serializers.ModelSerializer):
+# class _FlowerSerializer(serializers.ModelSerializer):
+#     languages = LanguageSerializer(many=True, read_only=True)
+#     colors = ColorSerializer(many=True, read_only=True)
+#     purposes = PurposeSerializer(many=True, read_only=True)
+#     star = serializers.FloatField()
+
+#     class Meta:
+#         model = Flower
+#         fields = ['id', 'name', 'purposes', 'image', 'star', ]
+
+class _FlowerSerializer(serializers.Serializer):    
+    id = serializers.IntegerField()
     languages = LanguageSerializer(many=True, read_only=True)
     colors = ColorSerializer(many=True, read_only=True)
     purposes = PurposeSerializer(many=True, read_only=True)
     star = serializers.FloatField()
 
-    class Meta:
-        model = Flower
-        fields = ['id', 'name', 'purposes', 'image', 'star', ]
+# class FlowerListSerializer(_FlowerSerializer):
+#     image = serializers.SerializerMethodField('get_thumbnail')
 
-    # def get_star(self, obj):
-    #     return obj.comments.aggregate(avgs=Avg(F('star'))).get('avgs', None)
+#     class Meta:
+#         model = Flower
+#         fields = ['id', 'name', 'purposes', 'image', 'star', ]
 
-class FlowerListSerializer(_FlowerSerializer):
+#     def get_thumbnail(self, obj):
+#         image = ImageSerializer(obj.images.first(), read_only=True)
+#         return image.data
+
+class FlowerListSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    name = serializers.CharField()
+    purposes = PurposeSerializer(many=True, read_only=True)
     image = serializers.SerializerMethodField('get_thumbnail')
-
-    class Meta:
-        model = Flower
-        fields = ['id', 'name', 'purposes', 'image', 'star', ]
+    star = serializers.FloatField()
 
     def get_thumbnail(self, obj):
         image = ImageSerializer(obj.images.first(), read_only=True)
         return image.data
 
 
-class FlowerDetailSerializer(_FlowerSerializer):
-    images = ImageSerializer(many=True, read_only=True)
+# class FlowerDetailSerializer(_FlowerSerializer):
+#     images = ImageSerializer(many=True, read_only=True)
 
-    class Meta:
-        model = Flower
-        fields = ['id', 'name', 'description', 'star', 'season',
-                  'images', 'languages', 'colors', 'purposes']
+#     class Meta:
+#         model = Flower
+#         fields = ['id', 'name', 'description', 'star', 'season',
+#                   'images', 'languages', 'colors', 'purposes']
+
+class FlowerDetailSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    name = serializers.CharField()
+    description = serializers.CharField()
+    season = serializers.IntegerField()
+    star = serializers.FloatField()
+    purposes = PurposeSerializer(many=True)
+    languages = LanguageSerializer(many=True)
+    colors = ColorSerializer(many=True)
+    images = ImageSerializer(many=True)
+
+    # class Meta:
+    #     model = Flower
+    #     fields = ['id', 'name', 'description', 'star', 'season',
+    #               'images', 'languages', 'colors', 'purposes']
 
 
-class CommentFlowerSerializer(FlowerListSerializer):
-    class Meta:
-        model = Flower
-        fields = ['id', 'name', 'image']
+class CommentFlowerSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    name = serializers.CharField()
+    image = serializers.SerializerMethodField('get_thumbnail')
+
+    def get_thumbnail(self, obj):
+        image = ImageSerializer(obj.images.first(), read_only=True)
+        return image.data
 
 SEASON = (
-        (0, '봄'),
-        (1, '여름'),
-        (2, '가을'),
-        (3, '겨울'),
-    )
+    (0, '봄'),
+    (1, '여름'),
+    (2, '가을'),
+    (3, '겨울'),
+)
+
 
 # class CustomFlowerSerializer(serializers.Serializer):
-#     name = serializers.CharField(read_only=True, required=False)
-#     description = serializers.CharField(required=False)
-#     season = serializers.IntegerField(default=1, choices=SEASON)
-#     # languages = models.ManyToManyField(Language, related_name='flowers')
-#     # colors = models.ManyToManyField(Color, related_name='flowers')
-#     # purposes = models.ManyToManyField(Purpose, related_name='flowers')
-#     def save(self):
-#         email = self.validated_data['email']
-#         message = self.validated_data['message']
-#         send_email(from=email, message=message)
+#     id = serializers.IntegerField()
+#     name = serializers.CharField()
+#     description = serializers.CharField()
+#     season = serializers.IntegerField()
+#     star = serializers.FloatField()
+#     purposes = PurposeSerializer(many=True)
+#     languages = LanguageSerializer(many=True)
+#     colors = ColorSerializer(many=True)
+#     images = ImageSerializer(many=True)
 
+#     # def save(self):
+#     #     email = self.validated_data['email']
+#     #     message = self.validated_data['message']
+#     #     send_email(from=email, message=message)
 
 #     def create(self, validated_data):
 #         return Flower.objects.create(**validated_data)

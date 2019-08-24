@@ -9,13 +9,14 @@ import logging
 
 class CommentSerializer(serializers.ModelSerializer):
     is_like = serializers.SerializerMethodField('get_is_like')
+    is_owner = serializers.SerializerMethodField('get_is_owner')
     user = UserNicknameSerializer(read_only=True)
     flower = CommentFlowerSerializer(read_only=True)
 
     class Meta:
         model = Comment
         fields = ['id', 'content', 'star',
-                  'created_at', 'like', 'is_like', 'user', 'flower']
+                  'created_at', 'like', 'is_like', 'user', 'flower', 'is_owner']
 
     def get_is_like(self, obj):
         if self.context['request'].user.is_authenticated:
@@ -25,6 +26,12 @@ class CommentSerializer(serializers.ModelSerializer):
             if like_comment:    
                 return True
         return False
+    
+    def get_is_owner(self, obj):
+        if obj.user == self.context['request'].user:
+            return True
+        else:
+            return False
 
 
 class CommentCreateSerializer(serializers.Serializer):
@@ -33,3 +40,10 @@ class CommentCreateSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         return Comment.objects.create(**validated_data)
+    
+    def update(self, instance, validated_data):
+        instance.content = validated_data['content']
+        setattr(instance, 'star', validated_data['star'])
+        return instance
+
+
