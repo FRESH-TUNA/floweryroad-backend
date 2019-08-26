@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./docker/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=floweryroaddev
+      - POSTGRES_USER=floweryroadadmin
+      - POSTGRES_PASSWORD=floweryroad1234
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
+
+  web:
+    image: floweryroad-backend
+
+    environment:
+      - DJANGO_DEBUG=True
+      - DJANGO_DB_HOST=db
+      - DJANGO_DB_PORT=5432
+      - DJANGO_DB_NAME=floweryroaddev
+      - DJANGO_DB_USERNAME=floweryroadadmin
+      - DJANGO_DB_PASSWORD=floweryroad1234
+      
+    ports:
+      - "8000:8000"
+    command: 
+      - python manage.py runserver 0:8000
+    volumes:
+      - ./:/app/
