@@ -64,29 +64,32 @@ class FlowerListSerializer(serializers.Serializer):
         return image.data
 
 
-# class FlowerDetailSerializer(_FlowerSerializer):
-#     images = ImageSerializer(many=True, read_only=True)
-
-#     class Meta:
-#         model = Flower
-#         fields = ['id', 'name', 'description', 'star', 'season',
-#                   'images', 'languages', 'colors', 'purposes']
-
-class FlowerDetailSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField()
-    description = serializers.CharField()
-    season = serializers.IntegerField()
+class FlowerDetailSerializer(serializers.ModelSerializer):
+    # images = ImageSerializer(many=True, read_only=True)
     star = serializers.FloatField()
     purposes = PurposeSerializer(many=True)
     languages = LanguageSerializer(many=True)
     colors = ColorSerializer(many=True)
     images = ImageSerializer(many=True)
+    class Meta:
+        model = Flower
+        fields = ['id', 'name', 'description', 'star', 'season',
+                  'images', 'languages', 'colors', 'purposes']
+    
 
-    # class Meta:
-    #     model = Flower
-    #     fields = ['id', 'name', 'description', 'star', 'season',
-    #               'images', 'languages', 'colors', 'purposes']
+# class FlowerDetailSerializer(serializers.Serializer):
+#     id = serializers.IntegerField()
+#     name = serializers.CharField()
+#     description = serializers.CharField()
+#     season = serializers.IntegerField()
+#     star = serializers.FloatField()
+#     purposes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+#     languages = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+#     colors = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+#     images = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
+   
+
 
 
 class CommentFlowerSerializer(serializers.Serializer):
