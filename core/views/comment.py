@@ -29,7 +29,26 @@ class CommentFlowerViewSet(_CommentViewSet, viewsets.ModelViewSet):
         serializer = CommentCreateSerializer(data=request.data)
         self.perform_create(serializer, flower_pk)
         return self.list(request)
-    
+
+class CommentDeleteViewSet(mixins.DestroyModelMixin, 
+                           mixins.ListModelMixin,
+                           viewsets.GenericViewSet
+                          ):
+    serializer_class = CommentSerializer
+    pagination_class = CommentPaginator
+
+    def get_queryset(self):
+        flower = Flower.objects.get(pk=self.request.data['flower_pk'])
+        return Comment.objects.filter(flower=flower).order_by('-created_at')
+
+    def destroy(self, request, pk):
+        comment = Comment.objects.get(id=pk)
+        if comment.user == request.user:
+            comment.delete()
+            return self.list(request)
+        else:
+            return Response({'user': 'is not owner'}, status=status.HTTP_401_UNAUTHORIZED)
+
     # def get_authenticators(self):
     #     """
     #     Instantiates and returns the list of authenticators that this view can use.
