@@ -4,7 +4,7 @@ services:
   db:
     image: postgres
     volumes:
-      - /usr/local/var/postgres:/var/lib/postgresql/data
+      - ./docker/data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=floweryroaddev
       - POSTGRES_USER=floweryroadadmin
@@ -35,5 +35,6 @@ services:
         pyenv virtualenv 3.6.4 floweryroad
         pyenv activate floweryroad
         pip install -r /app/floweryroad-backend/requirements.txt 
+        python /app/floweryroad-backend/manage.py migrate
         python /app/floweryroad-backend/manage.py runserver 0.0.0.0:8000
   
