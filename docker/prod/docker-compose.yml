@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:floweryroad # nginx 서비스에서 사용할 도커 이미지
+    ports:
+      - "80:80"
+    volumes:
+      - ../../static:/app/static  
+      - ../../static:/app/media
+    depends_on: # 서비스 간의 종속성 표현
+      - web
+    
+  db:
+    env_file: 
+      - ./db_credential.env
+    image: postgres
+    volumes:
+      - ../db_volume:/var/lib/postgresql/data
+    depends_on: # 서비스 간의 종속성 표현
+      - web
+  
+  web:
+    env_file: 
+      - ./credential.env
+    image: floweryroad-backend:1.1.0
+
+    volumes:
+      - ../../static:/app/floweryroad-backend/static  
+      - ../../static:/app/floweryroad-backend/media
+
+    command: 
+      - /bin/bash
+      - -c
+      - |
+        supervisord
+
+
+
+  

@@ -34,3 +34,4 @@ class LikeView(APIView):
                 ).count()
             }, status=status.HTTP_200_OK
         )
+        

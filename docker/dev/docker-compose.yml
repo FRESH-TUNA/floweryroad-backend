@@ -1,0 +1,40 @@
+version: '3'
+
+services:e
+  db:
+    image: postgres
+    volumes:
+      - ./docker/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=floweryroaddev
+      - POSTGRES_USER=floweryroadadmin
+      - POSTGRES_PASSWORD=floweryroad1234
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
+
+  web:
+    image: floweryroad-backend:1.0.0
+
+    environment:
+      - DEV_DB_HOST=db
+      - DEV_DB_PORT=5432
+      - DEV_DB_NAME=floweryroaddev
+      - DEV_DB_USERNAME=floweryroadadmin
+      - DEV_DB_PASSWORD=floweryroad1234
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ../../:/app/floweryroad-backend/
+
+    command: 
+      - /bin/bash
+      - -c
+      - |
+        source ~/.zshrc
+        pyenv virtualenv 3.6.4 floweryroad
+        pyenv activate floweryroad
+        pip install -r /app/floweryroad-backend/requirements.txt 
+        python /app/floweryroad-backend/manage.py migrate
+        python /app/floweryroad-backend/manage.py runserver 0.0.0.0:8000
+  
