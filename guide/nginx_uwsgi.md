@@ -17,5 +17,11 @@
   sudo systemctl daemon-reload
   sudo systemctl restart uwsgi nginx
 
-6. 
+6. nginx 테스트
 - uwsgi --http :8000 --home <가상환경폴더위치> --chdir <프로젝트폴더위치> -w floweryroad.wsgi
+
+- uwsgi --ini /app/floweryroad-backend/floweryroad/settings/.server/uwsgi.ini
+
+
+
+uwsgi --http :80 --home /root/.pyenv/versions/floweryroad --chdir /app/floweryroad-backend -w floweryroad.wsgi

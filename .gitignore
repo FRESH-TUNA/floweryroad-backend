@@ -141,8 +141,11 @@ dmypy.json
 .credential/
 .server/
 .vscode/
+static/
 media/
+guide/
 mydatabase
 /floweryroad.sql
 /docker/db_volume/
 /docker/**/credential.env
+/docker/**/db_credential.env

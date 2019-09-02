@@ -1,0 +1,10 @@
+sudo service docker start
+
+cd /app/floweryroad-backend
+
+docker build -t nginx:floweryroad  -f /app/floweryroad-backend/docker/nginx/Dockerfile .
+
+docker build -t floweryroad-backend:1.1.0  -f /app/floweryroad-backend/docker/prod/Dockerfile .
+
+docker-compose -f /app/floweryroad-backend/docker/prod/docker-compose.yml up
+

@@ -1,36 +1,40 @@
 version: '3'
 
 services:
+  nginx:
+    image: nginx:floweryroad # nginx 서비스에서 사용할 도커 이미지
+    ports:
+      - "80:80"
+    volumes:
+      - ../../static:/app/static  
+      - ../../static:/app/media
+    depends_on: # 서비스 간의 종속성 표현
+      - web
+    
   db:
+    env_file: 
+      - ./db_credential.env
     image: postgres
     volumes:
-      - /app/floweryroad-backend/docker/db_volume:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
-
+      - ../db_volume:/var/lib/postgresql/data
+    depends_on: # 서비스 간의 종속성 표현
+      - web
+  
   web:
-    env_file: credential.env
-    image: floweryroad-backend:1.0.0
+    env_file: 
+      - ./credential.env
+    image: floweryroad-backend:1.1.0
 
-    ports:
-      - "8000:8000"
-    
-    environment:
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_USER}
-      - DB_USER=${DB_NAME}
-      - DB_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ../../static:/app/floweryroad-backend/static  
+      - ../../static:/app/floweryroad-backend/media
 
     command: 
       - /bin/bash
       - -c
       - |
-        python /app/floweryroad-backend/manage.py migrate
-        sudo systemctl enable uwsgi
-        sudo systemctl daemon-reload
-        sudo systemctl restart uwsgi nginx
+        supervisord
+
+
+
   
