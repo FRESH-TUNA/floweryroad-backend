@@ -9,22 +9,22 @@ DEBUG = True
 # config_devdb_secret = json.loads(open(CONFIG_SETTINGS_COMMON_FILE).read())
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3w#j4id+z(%si4cl+7)mu%rb5wx9)0l5w5ormf+4p(zn&7q!!s'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 ROOT_URLCONF = 'floweryroad.urls.development'
 #media 설정
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_URL = 'http://localhost:8000/media/'
+MEDIA_URL = os.environ['MEDIA']
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ['DEV_DB_NAME'],
-        'USER': os.environ['DEV_DB_USERNAME'],
-        'PASSWORD': os.environ['DEV_DB_PASSWORD'],
-        'HOST': os.environ['DEV_DB_HOST'],
-        'PORT': os.environ['DEV_DB_PORT']
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST': os.environ['DB_HOST'],
+        'PORT': os.environ['DB_PORT']
     }
 }
 
