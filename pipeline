@@ -1,10 +1,14 @@
-sudo service docker start
-
 cd /app/floweryroad-backend
 
-docker build -t nginx:floweryroad  -f /app/floweryroad-backend/docker/nginx/Dockerfile .
+git pull origin master
 
-docker build -t floweryroad-backend:1.1.0  -f /app/floweryroad-backend/docker/prod/Dockerfile .
+scp -i ../floweryroad.pem -r docker/prod ec2-user@15.164.30.120:/app/floweryroad-backend/docker/prod
+Dockerfile
+
+
+docker build -t nginx:floweryroad  -f /app/floweryroad-backend/docker/nginx/prod/Dockerfile .
+
+docker build -t floweryroad-backend:1.2.0  -f /app/floweryroad-backend/docker/prod/Dockerfile .
 
 docker-compose -f /app/floweryroad-backend/docker/prod/docker-compose.yml up
 

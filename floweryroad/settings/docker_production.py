@@ -11,7 +11,7 @@ ROOT_URLCONF = 'floweryroad.urls.docker_production'
 ALLOWED_HOSTS = [os.environ['WEB_HOST']]
 
 CORS_ORIGIN_WHITELIST = [
-    "http://floweryroad.herokuapp.com",
+    os.environ['CORS']
 ]
 
 DATABASES = {

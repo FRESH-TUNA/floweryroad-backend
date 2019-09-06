@@ -16,7 +16,7 @@ class Round(Func):
 
 class FlowerFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains')
-    color = django_filters.NumberFilter(field_name='colors__id')
+    color = django_filters.CharFilter(field_name='colors__name')
     purpose = django_filters.CharFilter(field_name='purposes__name')
     language = django_filters.CharFilter(field_name='languages__name')
     birth = django_filters.NumberFilter(
@@ -35,14 +35,14 @@ class FlowerViewSet(viewsets.ReadOnlyModelViewSet):
 
     # 전체 검색(icontains)
     search_fields = ['name', 'description',
-                    'languages__name', 'purposes__name']
+                    'languages__name', 'purposes__name', 'colors__name']
 
     # 특정 필드 검색
     filter_class = FlowerFilter
 
     # # 정렬 기준
     # ordering_fields = ('name',)
-
+    # lookup_field = 'pk'
     
     
     def get_queryset(self):
