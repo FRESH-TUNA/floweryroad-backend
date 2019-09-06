@@ -1,7 +1,7 @@
-FROM        ubuntu:latest
-MAINTAINER  floweryroad-backend:1.1.0
+FROM        floweryroad-backend:1.1.0
+MAINTAINER  lunacircle4@gmail.com
 
-COPY /app/floweryroad-backend /app/floweryroad-backend
+COPY ./ /app/floweryroad-backend
 # pyenv
 # RUN         apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev \
 # libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \

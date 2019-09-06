@@ -17,8 +17,6 @@ services:
     image: postgres
     volumes:
       - ../db_volume:/var/lib/postgresql/data
-    depends_on: # 서비스 간의 종속성 표현
-      - web
   
   web:
     env_file: 
@@ -28,6 +26,9 @@ services:
     volumes:
       - ../../static:/app/floweryroad-backend/static  
       - ../../static:/app/floweryroad-backend/media
+    
+    depends_on: # 서비스 간의 종속성 표현
+      - db
 
     command: 
       - /bin/bash
