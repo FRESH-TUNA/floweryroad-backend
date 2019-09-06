@@ -7,7 +7,7 @@ services:
       - "80:80"
     volumes:
       - ../../static:/app/static  
-      - ../../static:/app/media
+      - ../../media:/app/media
     depends_on: # 서비스 간의 종속성 표현
       - web
     
@@ -23,7 +23,7 @@ services:
   web:
     env_file: 
       - ./credential.env
-    image: floweryroad-backend:1.1.0
+    image: floweryroad-backend:1.2.0
 
     volumes:
       - ../../static:/app/floweryroad-backend/static  
