@@ -1,4 +1,4 @@
-from rest_framework import viewsets, mixins
+from rest_framework.viewsets import GenericViewSet
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter, OrderingFilter
 import django_filters
@@ -8,6 +8,7 @@ import logging
 
 from core.models import Flower
 from core.serializers import FlowerListSerializer, FlowerDetailSerializer
+from core.mixins.flower import ListModelMixin, RetrieveModelMixin
 from core.paginators import FlowerPaginator
 
 class Round(Func):
@@ -27,13 +28,13 @@ class FlowerFilter(django_filters.FilterSet):
         fields = ['name', 'color', 'purpose', 'language', 'season', 'birth']
 
 
-class FlowerViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Flower.objects.all()
-    # serializer_class = FlowerListSerializer
+class FlowerViewSet(ListModelMixin,
+                    RetrieveModelMixin,
+                    GenericViewSet):
     pagination_class = FlowerPaginator
     filter_backends = (SearchFilter, DjangoFilterBackend)
 
-    # 전체 검색(icontains)
+    # 전체 검색(icontains), query에 대해 모두 체크
     search_fields = ['name', 'description',
                     'languages__name', 'purposes__name', 'colors__name']
 
@@ -43,7 +44,6 @@ class FlowerViewSet(viewsets.ReadOnlyModelViewSet):
     # # 정렬 기준
     # ordering_fields = ('name',)
     # lookup_field = 'pk'
-    
     
     def get_queryset(self):
         queryset = Flower.objects.annotate(
