@@ -10,7 +10,7 @@ router.register(r'purposes', PurposeViewSet, basename='purpose')
 router.register(r'colors', ColorViewSet, basename='color')
 
 comments_router = NestedSimpleRouter(router, r'flowers', lookup='flower')
-comments_router.register(r'comments', CommentFlowerViewSet)
+comments_router.register(r'comments', CommentFlowerViewSet, base_name='flower_comments')
 
 urlpatterns = [
     path('', include(router.urls)),
