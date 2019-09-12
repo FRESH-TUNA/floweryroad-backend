@@ -13,7 +13,7 @@
 ## 3. 프로젝트 개요
 꽃의 종류가 너무 많고 상황에 맞는 적절한 꽃을 찾기 힘들다는점에 착안하여<br/>
 사용자가 원하는 색깔이나 목적, 꽃말을 입력하면 원하는 꽃을 쉽게 찾을수 있는 웹서비스 
-### 기획안 PPT 자료 [<a href="https://github.com/lunacircle4/floweryroad-backend/blob/master/presentation.pdf?raw=true" target="_blank">클릭</a>]
+### 기획안 PPT 자료 [<a href="/presentation.pdf">클릭</a>]
 
 ## 4) 웹서비스 주요기능
 1. 꽃말, 이름, 색깔, 목적을 입력하여 원하는 꽃들을 검색할수 있다.
