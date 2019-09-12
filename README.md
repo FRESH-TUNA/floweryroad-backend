@@ -1,7 +1,5 @@
 # 풀꽃길
 ## 꽃길만 걷자
-<img src="https://github.com/kbs4674/blockchain_hackathon_public/blob/master/public/project/hackathon_poster.jpg?raw=true" width="250px">
-
 
 ## 1. 만든사람들
 김수빈 - 남서울대 멋사 운영진 (백엔드, 팀장)
