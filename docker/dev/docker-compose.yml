@@ -6,14 +6,14 @@ services:
     env_file: 
       - ./db_credential.env
     volumes:
-      - ../db_volume:/var/lib/postgresql/data
+      - ../../../db_volume:/var/lib/postgresql/data
 
   web:
     image: floweryroad-backend:develop
     env_file: 
       - ./credential.env
     volumes:
-      - ../../:/app/floweryroad-backend
+      - ../../../:/app
     ports:
       - "8000:8000"
     depends_on: 

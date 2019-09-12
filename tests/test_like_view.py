@@ -37,7 +37,7 @@ class CommentViewTest(TestCase):
     
     def test_create_delete_like(self):
         response = self.c.post(
-            '/comments/1/likes', 
+            '/comments/2/likes', 
             content_type="application/json",
             HTTP_AUTHORIZATION=self.headers['Authorization'],
         )
@@ -46,11 +46,11 @@ class CommentViewTest(TestCase):
         self.assertEqual(CommentLike.objects.get(id=1).like, True)
 
         response = self.c.delete(
-            '/comments/1/likes', 
+            '/comments/2/likes', 
             HTTP_AUTHORIZATION=self.headers['Authorization'],
         )
 
-        self.assertEqual(response.status_code, 204)
+        self.assertEqual(response.status_code, 200)
         # self.assertEqual(CommentLike.objects.count(), True)
         self.assertEqual(CommentLike.objects.get(id=1).like, False)
 
