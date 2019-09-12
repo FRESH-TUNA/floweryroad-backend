@@ -13,7 +13,7 @@
 ## 3. 프로젝트 개요
 꽃의 종류가 너무 많고 상황에 맞는 적절한 꽃을 찾기 힘들다는점에 착안하여<br/>
 사용자가 원하는 색깔이나 목적, 꽃말을 입력하면 원하는 꽃을 쉽게 찾을수 있는 웹서비스 
-### 기획안 PPT 자료 [<a href="https://github.com/kbs4674/blockchain_hackathon_public/blob/master/public/project/hackathon_project.pptx?raw=true" target="_blank">클릭</a>]
+### 기획안 PPT 자료 [<a href="https://github.com/lunacircle4/floweryroad-backend/blob/master/presentation.pdf?raw=true" target="_blank">클릭</a>]
 
 ## 4) 웹서비스 주요기능
 1. 꽃말, 이름, 색깔, 목적을 입력하여 원하는 꽃들을 검색할수 있다.
@@ -29,7 +29,7 @@
 
 ### 2. jwt web token 방식 인증 사용
 1. ```/flauth/views.py``` [<a href="/flauth/views.py">이동</a>] 회원가입, 회원정보 변경, 로그인 로직
-2. ```/flauth/serializers/auth.py``` [<a href="/flauth/serializers/auth.py">이동</a>] 회원가입후 바로 로그인될수 있게 재정의하여 사용
+2. ```/flauth/serializers/auth.py``` [<a href="/flauth/serializers/auth.py">이동</a>] 회원가입후 바로 로그인될수 있게 시리얼라이저 재정의하여 사용
 
 ### 3. 풀꽃길 로직
 1. ```/core/views/flower.py``` [<a href="/core/views/flower.py">이동</a>] 필터 기능을 활용한 꽃 검색
