@@ -24,7 +24,6 @@ class CommentFlowerViewSet(mixins.ListModelMixin,
         return Comment.objects.filter(flower=flower).order_by('-created_at')
 
     def get_serializer_class(self):
-        logging.error(self.action)
         if self.action == 'list':
             return CommentSerializer
         else:

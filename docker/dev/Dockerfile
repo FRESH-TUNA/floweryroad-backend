@@ -22,6 +22,9 @@ RUN         apt-get install -y zsh
 RUN         wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 RUN         chsh -s /usr/bin/zsh
 
+# # supervisord install
+RUN         apt-get -y install supervisor
+
 # virtualenv floweryroad
 COPY    ./requirements.txt /app/floweryroad-backend/requirements.txt
 RUN     pyenv virtualenv 3.6.4 floweryroad
