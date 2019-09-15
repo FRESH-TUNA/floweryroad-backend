@@ -20,11 +20,17 @@
 
 ## 5. 주요 소스 코드
 ### 1. 도커를 활용한 개발, 테스트, 배포 환경
-1. ```/docker/dev``` [<a href="/docker/dev">이동</a>] 개발 환경
-2. ```/floweryroad/settings/development.py``` [<a href="/floweryroad/settings/development.py">이동</a>] 개발 settings
-3. ```/docker/test``` [<a href="/docker/test">이동</a>] 테스트 환경
-4. ```/docker/prod``` [<a href="/docker/prod">이동</a>] 배포 환경
-5. ```/floweryroad/settings/docker_production.py``` [<a href="/floweryroad/settings/docker_production.py">이동</a>] 테스트, 배포 settings
+```/docker/dev/Dockerfile``` [<a href="/docker/dev/Dockerfile">이동</a>] 개발 환경을 위한 이미지<br/>
+```/docker/dev/docker-compose.yml``` [<a href="/docker/dev/docker-compose.yml">이동</a>] 개발 환경 작동 파일<br/>
+```/floweryroad/settings/development.py``` [<a href="/floweryroad/settings/development.py">이동</a>] 개발 settings
+<br/><br/>
+```/docker/test/docker-compose.yml``` [<a href="/docker/test/docker-compose.yml">이동</a>] 테스트 환경 작동파일
+<br/><br/>
+```/docker/prod/Dockerfile``` [<a href="/docker/prod/Dockerfile">이동</a>] 배포 환경을 위한 이미지<br/>
+```/docker/prod/docker-compose.yml``` [<a href="/docker/prod/docker-compose.yml">이동</a>] 배포 환경 작동파일<br/>
+```/floweryroad/settings/docker_production.py``` [<a href="/floweryroad/settings/docker_production.py">이동</a>] 테스트, 배포 settings
+<br/><br/>
+```/pipeline``` [<a href="/pipeline">이동</a>] 배포 파이프라인
 
 ### 2. jwt web token 방식 인증 사용
 1. ```/flauth/views.py``` [<a href="/flauth/views.py">이동</a>] 회원가입, 회원정보 변경, 로그인 로직
