@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  nginx:
+    image: lunacircle4/nginx:floweryroad-backend # nginx 서비스에서 사용할 도커 이미지
+    ports:
+      - "80:80"
+    volumes:
+      - /app/static:/app/static  
+      - /app/media:/app/media
+    depends_on: # 서비스 간의 종속성 표현
+      - web
+    
+  db:
+    env_file: 
+      - ./db_credential.env
+    image: postgres
+    volumes:
+      - /app/db_volume:/var/lib/postgresql/data
+  
+  web:
+    env_file: 
+      - ./credential.env
+    image: lunacircle4/floweryroad-backend:1.3.0
+
+    volumes:
+      - /app/static:/app/static  
+      - /app/media:/app/media
+    
+    depends_on: # 서비스 간의 종속성 표현
+      - db
+
+    command: 
+      - /bin/bash
+      - -c
+      - |
+        supervisord
+
+
+
+  
