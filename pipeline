@@ -15,5 +15,3 @@ ssh -i <pem 파일 경로> ec2-user@15.164.30.120
 docker-compose -f /app/floweryroad-backend/docker/prod/docker-compose.yml stop
 
 docker-compose -f /app/floweryroad-backend/docker/prod/docker-compose.yml up
-
-test
