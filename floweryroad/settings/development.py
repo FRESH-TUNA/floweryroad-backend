@@ -1,6 +1,16 @@
 from .base import *
 import os
 DEBUG = True
+
+INSTALLED_APPS = INSTALLED_APPS + [
+    'debug_toolbar'
+]
+
+MIDDLEWARE = MIDDLEWARE + [
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
+]
+
+INTERNAL_IPS = ('172.19.0.1',)
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 

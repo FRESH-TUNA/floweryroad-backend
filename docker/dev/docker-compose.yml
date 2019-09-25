@@ -9,7 +9,7 @@ services:
       - ../../db_volume:/var/lib/postgresql/data
 
   web:
-    image: floweryroad-backend:develop
+    image: lunacircle4/floweryroad-backend:develop
     env_file: 
       - ./credential.env
     volumes:
