@@ -1,4 +1,5 @@
 # 풀꽃길
+![](./floweryroad.png)
 
 ## 1. 만든사람들
 김수빈 - 남서울대 멋사 운영진 (백엔드, 팀장)<br/>
@@ -20,26 +21,26 @@
 
 ## 5. 주요 소스 코드
 ### 1. 도커를 활용한 개발, 테스트, 배포 환경
-```/docker/dev/Dockerfile``` [<a href="/docker/dev/Dockerfile">이동</a>] 개발 환경을 위한 이미지<br/>
-```/docker/dev/docker-compose.yml``` [<a href="/docker/dev/docker-compose.yml">이동</a>] 개발 환경 작동 파일<br/>
-```/floweryroad/settings/development.py``` [<a href="/floweryroad/settings/development.py">이동</a>] 개발 settings
+```/web/docker/dev/Dockerfile``` [<a href="/web/docker/dev/Dockerfile">이동</a>] 개발 환경을 위한 이미지<br/>
+```/docker-compose/dev/docker-compose.yml``` [<a href="/docker-compose/dev/docker-compose.yml">이동</a>] 개발 환경 작동 파일<br/>
+```/web/floweryroad/settings/development.py``` [<a href="/web/floweryroad/settings/development.py">이동</a>] 개발 settings
 <br/><br/>
-```/docker/test/docker-compose.yml``` [<a href="/docker/test/docker-compose.yml">이동</a>] 테스트 환경 작동파일
+```/docker-compose/test/docker-compose.yml``` [<a href="/docker-compose/test/docker-compose.yml">이동</a>] 테스트 환경 작동파일
 <br/><br/>
-```/docker/prod/Dockerfile``` [<a href="/docker/prod/Dockerfile">이동</a>] 배포 환경을 위한 이미지<br/>
-```/docker/prod/docker-compose.yml``` [<a href="/docker/prod/docker-compose.yml">이동</a>] 배포 환경 작동파일<br/>
-```/floweryroad/settings/docker_production.py``` [<a href="/floweryroad/settings/docker_production.py">이동</a>] 테스트, 배포 settings
+```/web/docker/prod/Dockerfile``` [<a href="/web/docker/prod/Dockerfile">이동</a>] 배포 환경을 위한 이미지<br/>
+```/docker-compose/prod/docker-compose.yml``` [<a href="/docker-compose/prod/docker-compose.yml">이동</a>] 배포 환경 작동파일<br/>
+```/web/floweryroad/settings/docker_production.py``` [<a href="/web/floweryroad/settings/docker_production.py">이동</a>] 테스트, 배포 settings
 <br/><br/>
 ```/pipeline``` [<a href="/pipeline">이동</a>] 배포 파이프라인
 
 ### 2. jwt web token 방식 인증 사용
-1. ```/flauth/views.py``` [<a href="/flauth/views.py">이동</a>] 회원가입, 회원정보 변경, 로그인 로직
-2. ```/flauth/serializers/auth.py``` [<a href="/flauth/serializers/auth.py">이동</a>] 회원가입후 바로 로그인될수 있게 시리얼라이저 재정의하여 사용
+1. ```/web/flauth/views.py``` [<a href="/web/flauth/views.py">이동</a>] 회원가입, 회원정보 변경, 로그인 로직
+2. ```/web/flauth/serializers/auth.py``` [<a href="/web/flauth/serializers/auth.py">이동</a>] 회원가입후 바로 로그인될수 있게 시리얼라이저 재정의하여 사용
 
 ### 3. 풀꽃길 로직
-1. ```/core/views/flower.py``` [<a href="/core/views/flower.py">이동</a>] 필터 기능을 활용한 꽃 검색
-2. ```/core/paginators/comment.py``` [<a href="/core/paginators/comment.py">이동</a>] 페이징시 링크를 제공하여 HATEOAS 할수 있도록 노력했다.
+1. ```/web/core/views/flower.py``` [<a href="/web/core/views/flower.py">이동</a>] 필터 기능을 활용한 꽃 검색
+2. ```/web/core/paginators/comment.py``` [<a href="/web/core/paginators/comment.py">이동</a>] 페이징시 링크를 제공하여 HATEOAS 할수 있도록 노력했다.
 
 ### 4. TDD
-1. ```/tests``` [<a href="/tests">이동</a>] 테스트 함수를 이용한 로직 확인
+1. ```/web/tests``` [<a href="/tests">이동</a>] 테스트 함수를 이용한 로직 확인
 
