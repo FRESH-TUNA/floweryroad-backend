@@ -38,7 +38,8 @@ class FlowerListSerializer(serializers.Serializer):
     star = serializers.FloatField()
 
     def get_thumbnail(self, obj):
-        image = ImageSerializer(obj.images.first(), read_only=True)
+        image = ImageSerializer(obj.images.all()[0], read_only=True)
+        # image = ImageSerializer(obj.images.first(), read_only=True)   //정렬해서 튀어나온다.
         return image.data
 
 class FlowerDetailSerializer(serializers.ModelSerializer):
@@ -58,7 +59,7 @@ class CommentFlowerSerializer(serializers.Serializer):
     image = serializers.SerializerMethodField('get_thumbnail')
 
     def get_thumbnail(self, obj):
-        image = ImageSerializer(obj.images.first(), read_only=True)
+        image = ImageSerializer(obj.images.all()[0], read_only=True)
         return image.data
 
 SEASON = (

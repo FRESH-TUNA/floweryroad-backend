@@ -10,7 +10,7 @@ from core.models import Flower
 from core.serializers import FlowerListSerializer, FlowerDetailSerializer
 from core.mixins.flower import ListModelMixin, RetrieveModelMixin
 from core.paginators import FlowerPaginator
-
+from django.db.models import Prefetch
 class Round(Func):
     function = "ROUND"
     template = "%(function)s(%(expressions)s::numeric, 1)"
@@ -47,7 +47,8 @@ class FlowerViewSet(ListModelMixin,
     
     def get_queryset(self):
         queryset = Flower.objects.annotate(
-            star=Round(Avg('comments__star')))
+            star=Round(Avg('comments__star'))).prefetch_related(
+                'languages', 'colors', 'purposes', 'images')
         ordering = self.request.GET.get('ordering', '')
         if ordering:
             if ordering.endswith('star'):

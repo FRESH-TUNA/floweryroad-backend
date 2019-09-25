@@ -13,15 +13,15 @@ services:
     
   db:
     env_file: 
-      - ./db_credential.env
+      - /app/.credential/db_credential.env
     image: postgres
     volumes:
       - /app/db_volume:/var/lib/postgresql/data
   
   web:
     env_file: 
-      - ./credential.env
-    image: lunacircle4/floweryroad-backend:1.3.0
+      - /app/.credential/credential.env
+    image: lunacircle4/floweryroad-backend
 
     volumes:
       - /app/static:/app/static  
