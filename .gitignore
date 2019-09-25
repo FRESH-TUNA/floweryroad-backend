@@ -151,3 +151,4 @@ mydatabase
 db_volume/
 /docker/**/credential.env
 /docker/**/db_credential.env
+pipeline.sh

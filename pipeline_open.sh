@@ -14,15 +14,15 @@ docker push lunacircle4/floweryroad-backend:1.3.2
 docker tag lunacircle4/floweryroad-backend:1.3.2 lunacircle4/floweryroad-backend:latest
 docker push lunacircle4/floweryroad-backend:latest
 
-scp -i /Users/kimdongwon/Documents/WebProgramming/credential/floweryroad.pem -r \
+scp -i <pem 경로> -r \
 /Users/kimdongwon/Documents/WebProgramming/Projects/Floweryroad/floweryroad-backend/.credential/prod/* \
 ec2-user@15.164.30.120:/app/.credential/
 
-scp -i /Users/kimdongwon/Documents/WebProgramming/credential/floweryroad.pem \
+scp -i <pem 경로> \
 /Users/kimdongwon/Documents/WebProgramming/Projects/Floweryroad/floweryroad-backend/docker-compose/prod/docker-compose.yml \
 ec2-user@15.164.30.120:/app/
 
-ssh -tt -i /Users/kimdongwon/Documents/WebProgramming/credential/floweryroad.pem ec2-user@15.164.30.120   "\
+ssh -tt -i <pem 경로> ec2-user@15.164.30.120   "\
                                     docker-compose -f /app/docker-compose.yml stop  && \
                                     docker-compose -f /app/docker-compose.yml pull  && \
                                     docker-compose -f /app/docker-compose.yml up -d"
