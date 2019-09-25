@@ -1,6 +1,6 @@
 # 풀꽃길
 ![](./floweryroad.png)
-[<a href="http://floweryroad.s3-website.ap-northeast-2.amazonaws.com/">http://floweryroad.s3-website.ap-northeast-2.amazonaws.com/</a>]
+<a href="http://floweryroad.s3-website.ap-northeast-2.amazonaws.com/">http://floweryroad.s3-website.ap-northeast-2.amazonaws.com/</a>
 
 ## 1. 만든사람들
 김수빈 - 남서울대 멋사 운영진 (백엔드, 팀장)<br/>
