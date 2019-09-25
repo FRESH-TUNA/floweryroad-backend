@@ -1,5 +1,6 @@
 # 풀꽃길
 ![](./floweryroad.png)
+[<a href="http://floweryroad.s3-website.ap-northeast-2.amazonaws.com/">http://floweryroad.s3-website.ap-northeast-2.amazonaws.com/</a>]
 
 ## 1. 만든사람들
 김수빈 - 남서울대 멋사 운영진 (백엔드, 팀장)<br/>
@@ -31,7 +32,7 @@
 ```/docker-compose/prod/docker-compose.yml``` [<a href="/docker-compose/prod/docker-compose.yml">이동</a>] 배포 환경 작동파일<br/>
 ```/web/floweryroad/settings/docker_production.py``` [<a href="/web/floweryroad/settings/docker_production.py">이동</a>] 테스트, 배포 settings
 <br/><br/>
-```/pipeline``` [<a href="/pipeline">이동</a>] 배포 파이프라인
+```/pipeline_open.sh``` [<a href="/pipeline_open.sh">이동</a>] 배포 파이프라인
 
 ### 2. jwt web token 방식 인증 사용
 1. ```/web/flauth/views.py``` [<a href="/web/flauth/views.py">이동</a>] 회원가입, 회원정보 변경, 로그인 로직
@@ -42,5 +43,5 @@
 2. ```/web/core/paginators/comment.py``` [<a href="/web/core/paginators/comment.py">이동</a>] 페이징시 링크를 제공하여 HATEOAS 할수 있도록 노력했다.
 
 ### 4. TDD
-1. ```/web/tests``` [<a href="/tests">이동</a>] 테스트 함수를 이용한 로직 확인
+1. ```/web/tests``` [<a href="/web/tests">이동</a>] 테스트 함수를 이용한 로직 확인
 
