@@ -139,13 +139,15 @@ dmypy.json
 
 # Customized .gitignore
 .credential/
+.credential_old/
 .server/
 .vscode/
+.server/
 static/
 media/
 guide/
 mydatabase
 /floweryroad.sql
-/docker/db_volume/
+db_volume/
 /docker/**/credential.env
 /docker/**/db_credential.env

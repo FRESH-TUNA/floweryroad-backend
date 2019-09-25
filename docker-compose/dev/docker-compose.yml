@@ -4,16 +4,16 @@ services:
   db:
     image: postgres
     env_file: 
-      - ./db_credential.env
+      - /Users/kimdongwon/Documents/WebProgramming/Projects/Floweryroad/floweryroad-backend/.credential/dev/db_credential.env
     volumes:
       - ../../db_volume:/var/lib/postgresql/data
 
   web:
     image: lunacircle4/floweryroad-backend:develop
     env_file: 
-      - ./credential.env
+      - /Users/kimdongwon/Documents/WebProgramming/Projects/Floweryroad/floweryroad-backend/.credential/dev/credential.env
     volumes:
-      - ../../:/app
+      - ../../web:/app/web
     ports:
       - "8000:8000"
     depends_on: 
@@ -23,6 +23,6 @@ services:
       - -c
       - |
         source /root/.pyenv/versions/floweryroad/bin/activate
-        python /app/floweryroad-backend/manage.py migrate
-        python /app/floweryroad-backend/manage.py runserver 0.0.0.0:8000
+        python /app/web/manage.py migrate
+        python /app/web/manage.py runserver 0.0.0.0:8000
   
