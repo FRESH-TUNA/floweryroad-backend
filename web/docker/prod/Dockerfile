@@ -8,4 +8,4 @@ RUN apt update \
     && cp ./docker/prod/supervisord_was.conf /etc/supervisor/conf.d
     
 RUN pip3 --no-cache-dir install -r requirements.txt
-ENTRYPOINT ["sh", "./docker/prod/entrypoint.sh"]
+
