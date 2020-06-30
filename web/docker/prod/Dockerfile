@@ -1,13 +1,11 @@
-FROM        floweryroad-backend:develop
-MAINTAINER  lunacircle4@gmail.com
-
-COPY ./ /app/web
-COPY ./.server /app/.server
-# COPY /app/floweryroad-backend /app/floweryroad-backend
-
-# nginx
-# RUN         cp -f /app/.server/uwsgi.service /etc/systemd/system/uwsgi.service
-RUN         cp -f /app/.server/supervisor_app.conf /etc/supervisor/conf.d/
-
-# requirements.txt install
-# RUN         /root/.pyenv/versions/floweryroad/bin/pip install -r /app/floweryroad-backend/requirements.txt
+# production
+FROM lunacircle4/python:3.8.1
+WORKDIR /web
+COPY . .
+RUN apt update \
+    && apt install -y postgresql postgresql-contrib libpq-dev supervisor \         
+    && rm -rf /var/lib/apt/lists/* \
+    && cp ./docker/prod/supervisord_was.conf /etc/supervisor/conf.d
+    
+RUN pip3 --no-cache-dir install -r requirements.txt
+ENTRYPOINT ["sh", "./docker/prod/entrypoint.sh"]
