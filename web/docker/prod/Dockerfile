@@ -6,7 +6,9 @@ RUN apt update \
     && apt install -y postgresql postgresql-contrib libpq-dev supervisor \
     && zlib1g-dev libjpeg-dev \         
     && rm -rf /var/lib/apt/lists/* \
-    && cp ./docker/prod/supervisord_was.conf /etc/supervisor/conf.d
+    && cp ./docker/prod/supervisord_was.conf /etc/supervisor/conf.d \
+    && mkdir logs
     
 RUN pip3 --no-cache-dir install -r requirements.txt
 
+ENTRYPOINT ["/usr/bin/supervisord"]
