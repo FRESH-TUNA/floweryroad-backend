@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-import floweryroad.settings.base as settings
+import config.environments.base as settings
 from . import Flower
 
 class View(models.Model):

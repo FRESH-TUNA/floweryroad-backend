@@ -1,4 +1,4 @@
-import floweryroad.settings.base as settings
+import config.environments.base as settings
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from . import Comment

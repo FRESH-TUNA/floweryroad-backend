@@ -1,5 +1,5 @@
 from .base import urlpatterns
-import floweryroad.settings.docker_production as settings
+import fconfig.environments.heroku_production as settings
 from django.conf.urls.static import static
 
 urlpatterns += static(

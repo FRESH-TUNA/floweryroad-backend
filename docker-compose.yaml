@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  database:
+    env_file: 
+      - envs/database/development.env
+    image: postgres:12.2-alpine
+    container_name: database.development.floweryroad-backend
+    volumes:
+      - database.development.floweryroad:/var/lib/postgresql/data
+    networks:
+      - development.floweryroad-backend
+
+  logic:
+    env_file:
+      - envs/logic/development.env
+    container_name: logic.development.floweryroad-backend
+    build:
+      context: ./logic
+      dockerfile: docker/development/Dockerfile
+    volumes:
+      - "./logic:/logic"
+    ports:
+      - "8000:8000"
+    networks:
+      - development.floweryroad-backend
+
+volumes:
+  database.development.floweryroad:
+    external: true
+
+networks:
+  development.floweryroad-backend:
+    external: true
