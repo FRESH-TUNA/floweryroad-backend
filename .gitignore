@@ -150,4 +150,4 @@ mydatabase
 /floweryroad.sql
 volume/
 pipeline.sh
-# envs/*
+envs/*
