@@ -24,8 +24,6 @@ ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
-# APPEND_SLASH=False
-
 # Application definition
 PROJECT_APPS = [
     'core',
@@ -86,7 +84,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.contrib.messages.context_processors.messages'
             ],
         },
     },
@@ -139,3 +137,4 @@ DATABASES = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_URL = '/static/'
+MEDIA_URL = os.environ['MEDIA_URL']

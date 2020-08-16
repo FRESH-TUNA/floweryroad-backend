@@ -14,6 +14,7 @@ echo "DB_PASSWORD=${db_password}"\ >> $(pwd)/envs/logic/development.env;
 echo "DB_HOST=database"\ >> $(pwd)/envs/logic/development.env;
 echo "DB_PORT=5432"\  >> $(pwd)/envs/logic/development.env;
 echo "ALLOWED_HOSTS=*"\ >> $(pwd)/envs/logic/development.env;
+echo "MEDIA_URL=http://localhost:8000/media/"\ >> $(pwd)/envs/logic/development.env;
 
 ## generate secret key
 seed='<=>|-,;:!/.()[]{}*\&#%+012345689abcdefghiklmnopqrstuvwxyz';
