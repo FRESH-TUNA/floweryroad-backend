@@ -7,7 +7,7 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('flauth', '0002_auto_20190806_1119'),
+        ('floweryroad-auth', '0002_auto_20190806_1119'),
     ]
 
     operations = [

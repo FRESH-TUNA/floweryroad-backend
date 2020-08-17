@@ -2,15 +2,14 @@ from rest_framework import serializers
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 from core.models import Comment, CommentLike
-
-from flauth.serializers import UserNicknameSerializer
 from . import CommentFlowerSerializer
+# from auth.serializers import UserNicknameSerializer
 import logging
 
 class CommentSerializer(serializers.ModelSerializer):
     is_like = serializers.SerializerMethodField('get_is_like')
     is_owner = serializers.SerializerMethodField('get_is_owner')
-    user = UserNicknameSerializer(read_only=True)
+    # user = UserNicknameSerializer(read_only=True)
     flower = CommentFlowerSerializer(read_only=True)
 
     class Meta:

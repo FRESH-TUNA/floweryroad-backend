@@ -1,7 +1,7 @@
 from rest_framework import viewsets, mixins, status
 from rest_framework.response import Response
 from core.models import Comment, CommentLike, Flower
-from flauth.models import User
+from auth.models import User
 from core.serializers import CommentSerializer, CommentCreateSerializer
 from core.mixins.comment import CreateModelMixin
 from core.paginators import CommentPaginator

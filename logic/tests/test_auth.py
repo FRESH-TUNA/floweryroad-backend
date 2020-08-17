@@ -1,5 +1,5 @@
 from django.test import TestCase
-from flauth.models import User
+from auth.models import User
 from django.db import models
 from django.test import Client
 import json

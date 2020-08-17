@@ -27,7 +27,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # Application definition
 PROJECT_APPS = [
     'core',
-    'flauth',
+    'auth.apps.AuthConfig'
 ]
 
 INSTALLED_APPS = PROJECT_APPS + [
@@ -72,7 +72,8 @@ CORS_ORIGIN_WHITELIST = [
     "http://127.0.0.1:3000",
 ]
 
-AUTH_USER_MODEL = 'flauth.User'
+# AUTH_USER_MODEL must be of the form 'app_label.model_name'
+AUTH_USER_MODEL = 'floweryroad-auth.User'
 
 TEMPLATES = [
     {

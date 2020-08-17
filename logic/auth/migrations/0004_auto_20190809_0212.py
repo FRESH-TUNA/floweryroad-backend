@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('flauth', '0003_user_deta_joined'),
+        ('floweryroad-auth', '0003_user_deta_joined'),
     ]
 
     operations = [

@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('flauth', '0001_initial'),
+        ('floweryroad-auth', '0001_initial'),
     ]
 
     operations = [

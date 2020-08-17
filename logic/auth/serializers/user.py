@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from flauth.models import User
+from django.contrib.auth.models import User
 from core.serializers import ColorSerializer, PurposeSerializer
 
 class UserSerializer(serializers.ModelSerializer):

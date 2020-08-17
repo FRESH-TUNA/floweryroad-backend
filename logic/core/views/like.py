@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from core.models import CommentLike, Comment
-import logging
+
 class LikeView(APIView):
     def post(self, request, pk):
         like_obj, isNew = \
@@ -34,4 +34,3 @@ class LikeView(APIView):
                 ).count()
             }, status=status.HTTP_200_OK
         )
-        
