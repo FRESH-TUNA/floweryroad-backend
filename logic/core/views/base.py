@@ -8,7 +8,7 @@ from rest_framework.mixins import (
     DestroyModelMixin
 )
 
-class BaseViewSet(
+class BaseGenericViewSet(
     GenericViewSet, 
     ListModelMixin, 
     RetrieveModelMixin, 
@@ -16,4 +16,6 @@ class BaseViewSet(
     UpdateModelMixin, 
     DestroyModelMixin
 ):
+    # serializer_class = PurposeSerializer
+    # lookup_field = 'comment_pk'
     pass
