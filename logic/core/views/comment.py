@@ -6,12 +6,8 @@ from core.serializers import CommentSerializer, CommentCreateSerializer
 from core.mixins.comment import CreateModelMixin
 from core.paginators import CommentPaginator
 from rest_framework_simplejwt.authentication import JWTAuthentication
-import logging 
-
-class _CommentViewSet(viewsets.GenericViewSet):
-    serializer_class = CommentSerializer
-    pagination_class = CommentPaginator
-    
+from core.views.base import BaseGenericViewSet
+from core.permissions import (DeleteOnly, HasObjectPermission)
 
 class CommentFlowerViewSet(mixins.ListModelMixin,
                            CreateModelMixin,
@@ -29,11 +25,14 @@ class CommentFlowerViewSet(mixins.ListModelMixin,
         else:
             return CommentCreateSerializer
 
-class CommentDeleteViewSet(mixins.DestroyModelMixin, 
-                           mixins.ListModelMixin,
-                           _CommentViewSet
-                          ):
+class CommentsViewSet(BaseGenericViewSet):
+    permission_classes = [DeleteOnly, HasObjectPermission]
+    serializer_class = CommentSerializer
+    pagination_class = CommentPaginator
 
+    def get_object(self):
+        return Comment.objects.get(id=self.kwargs["pk"])
+    
     def get_queryset(self):
         flower = Flower.objects.get(pk=self.request.data['flower_pk'])
         return Comment.objects.filter(flower=flower).order_by('-created_at')
@@ -42,15 +41,3 @@ class CommentDeleteViewSet(mixins.DestroyModelMixin,
         instance = self.get_object()
         self.perform_destroy(instance)
         return self.list(request)
-
-# user가 작성한 댓글
-class CommentUserViewSet(_CommentViewSet, viewsets.ReadOnlyModelViewSet):
-    def get_queryset(self):
-        user = User.objects.get(pk=self.kwargs['user_pk'])
-        return Comment.objects.filter(user=user)
-
-# user가 좋아요한 댓글
-class CommentLikeViewSet(_CommentViewSet, viewsets.ReadOnlyModelViewSet):
-    def get_queryset(self):
-        user = User.objects.get(pk=self.kwargs['user_pk'])
-        return Comment.objects.filter(comment_likes__user=user, comment_likes__like=True)

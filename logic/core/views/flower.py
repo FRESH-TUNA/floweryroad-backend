@@ -4,13 +4,13 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Avg, Count, Func
-import logging
 
 from core.models import Flower
 from core.serializers import FlowerListSerializer, FlowerDetailSerializer
 from core.mixins.flower import ListModelMixin, RetrieveModelMixin
 from core.paginators import FlowerPaginator
 from django.db.models import Prefetch
+
 class Round(Func):
     function = "ROUND"
     template = "%(function)s(%(expressions)s::numeric, 1)"
@@ -34,11 +34,11 @@ class FlowerViewSet(ListModelMixin,
     pagination_class = FlowerPaginator
     filter_backends = (SearchFilter, DjangoFilterBackend)
 
-    # 전체 검색(icontains), query에 대해 모두 체크
+    # search query에 대한 전체 검색(icontains), query에 대해 모두 체크
     search_fields = ['name', 'description',
                     'languages__name', 'purposes__name', 'colors__name']
 
-    # 특정 필드 검색
+    # 특정 필드 query에 대한 검색
     filter_class = FlowerFilter
 
     # # 정렬 기준

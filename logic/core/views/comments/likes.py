@@ -3,7 +3,6 @@ from core.permissions import PostDeleteOnly
 from core.mixins.comments.likes import (CreateModelMixin, DestroyModelMixin)
 from core.models import CommentLike, Comment
 from core.serializers import PurposeSerializer
-import logging
 
 class CommentsLikesViewSet(
     CreateModelMixin,

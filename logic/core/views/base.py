@@ -16,6 +16,7 @@ class BaseGenericViewSet(
     UpdateModelMixin, 
     DestroyModelMixin
 ):
+    # queryset
     # serializer_class = PurposeSerializer
     # lookup_field = 'comment_pk'
     pass
