@@ -1,4 +1,5 @@
-from .purpose import PurposeSerializer
-from .color import ColorSerializer
-from .flower import FlowerListSerializer, FlowerDetailSerializer, CommentFlowerSerializer
-from .comment import CommentSerializer, CommentCreateSerializer
+from .purposes import PurposeSerializer
+from .colors import ColorSerializer
+from .flowers import FlowerListSerializer, FlowerDetailSerializer, CommentFlowerSerializer
+from .comments import CommentSerializer, CommentCreateSerializer
+from .images import ImageSerializer

@@ -22,3 +22,7 @@ class HasObjectPermission(BasePermission):
 class ReadOnly(BasePermission):
     def has_permission(self, request, view):
         return bool(request.method in SAFE_METHODS)
+
+class CreateReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        return bool(request.method in SAFE_METHODS or request.method == 'POST')

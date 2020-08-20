@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter, SimpleRouter
 from rest_framework_nested.routers import NestedSimpleRouter
 from .views import FlowerViewSet, PurposeViewSet, ColorViewSet
-from .views import CommentFlowerViewSet, CommentsViewSet, CommentsLikesViewSet
+from .views import CommentsViewSet, CommentsLikesViewSet
 from .views.flowers.comments import FlowersCommentsViewSet
 from .routers.comments.likes import CommentsLikesRouter
 
@@ -22,7 +22,7 @@ flowers_comments_router.register(r'comments', FlowersCommentsViewSet, base_name=
 
 urlpatterns = [
     path('', include(root_router.urls)),
-    path('', include(comments_router.urls)),
+    path('', include(comments_likes_router.urls)),
     path('', include(flowers_comments_router.urls)),
     path('', include(comments_router.urls))
 ]

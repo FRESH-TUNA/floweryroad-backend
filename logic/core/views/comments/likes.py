@@ -11,7 +11,7 @@ class CommentsLikesViewSet(
 ):
     permission_classes = [PostDeleteOnly]
 
-    # generic viewset 에서는 기본적으로 지원하지만 router와의 연계를 위해 사용
+    # generic_viewset 에서는 기본값으로 지원하지만 router와의 연계를 위해 사용
     lookup_field = 'comment_pk'
 
     def get_object(self):

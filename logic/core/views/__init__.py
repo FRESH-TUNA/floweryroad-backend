@@ -1,6 +1,6 @@
-from .flower import FlowerViewSet
-from .purpose import PurposeViewSet
-from .color import ColorViewSet
-from .comment import CommentFlowerViewSet, CommentsViewSet
+from .flowers import FlowerViewSet
+from .purposes import PurposeViewSet
+from .colors import ColorViewSet
+from .comments import CommentsViewSet
 from .base import BaseGenericViewSet
 from .comments.likes import CommentsLikesViewSet

@@ -1,14 +1,21 @@
 from core.views.base import BaseGenericViewSet
-from core.permissions import ReadOnly
-from core.serializers import CommentSerializer
+from core.permissions import CreateReadOnly
+from core.serializers import (CommentSerializer, CommentCreateSerializer)
 from core.paginators import CommentPaginator
 from core.models import Comment, Flower
+from core.mixins.comment import CreateModelMixin
 
-class FlowersCommentsViewSet(BaseGenericViewSet):
-    serializer_class = CommentSerializer
+class FlowersCommentsViewSet(CreateModelMixin, BaseGenericViewSet):
     pagination_class = CommentPaginator
-    permission_classes = [ReadOnly]
+    permission_classes = [CreateReadOnly]
 
     def get_queryset(self):
+        # flower = Flower.objects.select_related('user').get(pk=self.kwargs['flower_pk'])
         flower = Flower.objects.get(pk=self.kwargs['flower_pk'])
-        return Comment.objects.filter(flower=flower).order_by('-created_at')
+        return Comment.objects.select_related('user', 'flower').prefetch_related('comment_likes', 'flower__images').filter(flower_id=self.kwargs['flower_pk']).order_by('-created_at')
+    
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return CommentSerializer
+        else:
+            return CommentCreateSerializer

@@ -1,27 +1,11 @@
 from rest_framework import serializers
 from core.models import Color, Language, Image, Flower
-from core.serializers import PurposeSerializer
+from .purposes import PurposeSerializer
+from .images import ImageSerializer
+from .colors import ColorSerializer
+from .languages import LanguageSerializer
 from django.db.models import Avg, F
-
 from django.core.validators import MaxValueValidator, MinValueValidator
-import logging
-
-class ImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Image
-        fields = ['url']
-
-
-class ColorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Color
-        fields = '__all__'
-
-
-class LanguageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Language
-        fields = '__all__'
 
 class _FlowerSerializer(serializers.Serializer):    
     id = serializers.IntegerField()
