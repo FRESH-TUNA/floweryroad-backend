@@ -1,9 +1,8 @@
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
-
-class FlowerPaginator(PageNumberPagination):
-    page_size = 10
+class FlowersCommentsPaginator(PageNumberPagination):
+    page_size = 6
 
     def get_paginated_response(self, data):
         return Response({
@@ -12,5 +11,5 @@ class FlowerPaginator(PageNumberPagination):
                 'previous': self.get_previous_link()
             },
             'count': self.page.paginator.count,
-            'flowers': data,
+            'comments': data,
         })

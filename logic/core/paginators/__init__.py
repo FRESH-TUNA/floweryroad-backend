@@ -1,2 +1,2 @@
-from .comment import CommentPaginator
-from .flower import FlowerPaginator
+from .flowers import *
+from .flowers.comments import FlowersCommentsPaginator

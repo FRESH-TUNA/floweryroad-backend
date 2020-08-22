@@ -8,7 +8,7 @@ from django.db.models import Avg, Count, Func
 from core.models import Flower
 from core.serializers import FlowerListSerializer, FlowerDetailSerializer
 from core.mixins.flower import ListModelMixin, RetrieveModelMixin
-from core.paginators import FlowerPaginator
+from core.paginators import FlowersPaginator
 from django.db.models import Prefetch
 
 class Round(Func):
@@ -31,7 +31,7 @@ class FlowerFilter(django_filters.FilterSet):
 class FlowerViewSet(ListModelMixin,
                     RetrieveModelMixin,
                     GenericViewSet):
-    pagination_class = FlowerPaginator
+    pagination_class = FlowersPaginator
     filter_backends = (SearchFilter, DjangoFilterBackend)
 
     # search query에 대한 전체 검색(icontains), query에 대해 모두 체크

@@ -2,14 +2,13 @@ from rest_framework import viewsets, mixins, status
 from rest_framework.response import Response
 from core.models import Comment, CommentLike, Flower
 from core.serializers import CommentSerializer
-from core.paginators import CommentPaginator
+from core.paginators import *
 from core.views.base import BaseGenericViewSet
 from core.permissions import (DeleteOnly, HasObjectPermission)
 
 class CommentsViewSet(BaseGenericViewSet):
     permission_classes = [DeleteOnly, HasObjectPermission]
     serializer_class = CommentSerializer
-    pagination_class = CommentPaginator
 
     def get_object(self):
         return Comment.objects.get(id=self.kwargs["pk"])

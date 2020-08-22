@@ -1,12 +1,12 @@
 from core.views.base import BaseGenericViewSet
 from core.permissions import CreateReadOnly
 from core.serializers import (CommentSerializer, CommentCreateSerializer)
-from core.paginators import CommentPaginator
+from core.paginators import *
 from core.models import Comment, Flower
 from core.mixins.comment import CreateModelMixin
 
 class FlowersCommentsViewSet(CreateModelMixin, BaseGenericViewSet):
-    pagination_class = CommentPaginator
+    pagination_class = FlowersCommentsPaginator
     permission_classes = [CreateReadOnly]
 
     def get_queryset(self):

@@ -1,4 +1,5 @@
 from rest_framework.routers import Route, SimpleRouter
+from core.views import CommentsLikesViewSet
 
 class CommentsLikesRouter(SimpleRouter):
     routes = [
@@ -13,3 +14,6 @@ class CommentsLikesRouter(SimpleRouter):
             initkwargs={'suffix': 'Detail'}
         ),
     ]
+
+comments_likes_router = CommentsLikesRouter(trailing_slash=False)
+comments_likes_router.register(r'comments', CommentsLikesViewSet, basename='comments_likes')
