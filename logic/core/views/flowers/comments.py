@@ -1,6 +1,6 @@
 from core.views.base import BaseGenericViewSet
 from core.permissions import CreateReadOnly
-from core.serializers import (CommentSerializer, CommentCreateSerializer)
+from core.serializers import *
 from core.paginators import *
 from core.models import Comment, Flower
 from core.mixins.comment import CreateModelMixin
@@ -16,6 +16,6 @@ class FlowersCommentsViewSet(CreateModelMixin, BaseGenericViewSet):
     
     def get_serializer_class(self):
         if self.action == 'list':
-            return CommentSerializer
+            return FlowersCommentsSerializer
         else:
-            return CommentCreateSerializer
+            return FlowersCommentsCreateSerializer

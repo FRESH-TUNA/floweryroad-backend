@@ -6,7 +6,7 @@ from . import CommentFlowerSerializer
 # from auth.serializers import UserNicknameSerializer
 import logging
 
-class FlowersCommentsSerializer(serializers.ModelSerializer):
+class CommentsSerializer(serializers.ModelSerializer):
     is_like = serializers.SerializerMethodField('get_is_like')
     is_owner = serializers.SerializerMethodField('get_is_owner')
     # user = UserNicknameSerializer(read_only=True)
@@ -31,16 +31,3 @@ class FlowersCommentsSerializer(serializers.ModelSerializer):
             return True
         else:
             return False
-
-
-class FlowersCommentsCreateSerializer(serializers.Serializer):
-    content = serializers.CharField(max_length=200, allow_blank=True)
-    star = serializers.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(5.0)], default=0.0)
-
-    def create(self, validated_data):
-        return Comment.objects.create(**validated_data)
-    
-    def update(self, instance, validated_data):
-        instance.content = validated_data['content']
-        setattr(instance, 'star', validated_data['star'])
-        return instance
