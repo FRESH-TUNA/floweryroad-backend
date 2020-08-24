@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from auth.models import User
 from core.serializers import ColorSerializer, PurposeSerializer
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,3 +15,12 @@ class UserNicknameSerializer(UserSerializer):
     class Meta:
         model = User
         fields = ['id', 'nickname']
+
+class ChangeUserNicknameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['email', 'password', 'nickname']
+    
+    def update(self, instance, validated_data):
+        validated_data.pop('password')
+        return super().update(instance, validated_data)

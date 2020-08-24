@@ -8,8 +8,10 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import authenticate
 
 from auth.models import User
-from auth.serializers import UserSerializer, CustomTokenObtainPairSerializer
+from auth.serializers import CustomTokenObtainPairSerializer
+from auth.serializers.user import UserSerializer, UserNicknameSerializer, ChangeUserNicknameSerializer
 import json
+import logging
 
 class SignupMixin:
     def signup_service(self, request, *args, **kwargs):
@@ -28,13 +30,10 @@ class SignupMixin:
 
 class ChangeUserInfoMixin:
     def change_nickname_service(self, request, *args, **kwargs):
-        authenticate_kwargs = {
-            'email': request.data['email'],
-            'password': request.data['password'],
-        }
-        if authenticate(**authenticate_kwargs) is not None:
-            request.user.nickname = request.data['nickname']
-            request.user.save()
+        serializer = ChangeUserNicknameSerializer(request.user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        if authenticate(**serializer.validated_data) is not None:
+            serializer.save()
             return Response({'nickname': request.user.nickname}, status=status.HTTP_206_PARTIAL_CONTENT)
         else:
             return Response({'password': 'password is not correct'}, status=status.HTTP_401_UNAUTHORIZED)

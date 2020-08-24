@@ -6,11 +6,10 @@ from rest_framework.parsers import JSONParser
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import authenticate
+from auth.serializers.user import UserSerializer
+from auth.models import User
+from .serializers import UserSerializer
 
-from .models import User
-from .serializers import UserSerializer, CustomTokenObtainPairSerializer
-import logging
-import json
 
 class UserViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     queryset = User.objects.all()
