@@ -21,3 +21,20 @@ ROOT_URLCONF = 'config.urls.development'
 
 #media 설정
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+import logging.config
+import os
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+}
