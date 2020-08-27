@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate
 
 from auth.models import User
 from auth.serializers import CustomTokenObtainPairSerializer
-from auth.serializers.user import (
+from auth.serializers.users import (
     ChangeUserNicknameSerializer, 
     ChangeUserPasswordSerializer,
     SignupUserSerializer

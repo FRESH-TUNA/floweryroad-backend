@@ -3,4 +3,3 @@ from .colors import ColorSerializer
 from .flowers import FlowerListSerializer, FlowerDetailSerializer, CommentFlowerSerializer
 from .flowers.comments import *
 from .images import ImageSerializer
-from .comments import *

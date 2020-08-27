@@ -2,7 +2,6 @@ from rest_framework import serializers
 from auth.models import User
 from django.db import models
 from core.serializers import ColorSerializer, PurposeSerializer
-import logging
 
 class UserSerializer(serializers.ModelSerializer):
     color = ColorSerializer()
@@ -13,10 +12,11 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'nickname', 'email', 'color', 'purpose', 'date_joined']
 
 
-class UserNicknameSerializer(UserSerializer):
+class UserNicknameSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'nickname']
+        read_only_fields = ['id', 'nickname']
 
 class ChangeUserPasswordSerializer(serializers.Serializer):
     password1 = serializers.CharField(max_length=128)

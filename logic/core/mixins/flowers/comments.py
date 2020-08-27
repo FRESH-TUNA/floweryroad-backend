@@ -5,9 +5,6 @@ from rest_framework.settings import api_settings
 from core.models import Flower
 
 class CreateModelMixin:
-    def perform_create(self, serializer, flower):
-        serializer.save(user=self.request.user, flower=flower)
-
     def create(self, request, *args, **kwargs):
         flower = Flower.objects.get(pk=kwargs['flower_pk'])
         serializer = self.get_serializer(data=request.data)
@@ -16,3 +13,6 @@ class CreateModelMixin:
         self.action = 'list'
         return self.list(request)
     
+    def perform_create(self, serializer, flower):
+        # model serializer의 경우 create, update시 추가적으로 반영할 녀석들을 넘겨줄수 있다.
+        serializer.save(user=self.request.user, flower=flower)
