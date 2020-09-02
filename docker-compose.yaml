@@ -16,10 +16,10 @@ services:
       - envs/logic/development.env
     container_name: logic.development.floweryroad-backend
     build:
-      context: ./logic
+      context: ./
       dockerfile: docker/development/Dockerfile
     volumes:
-      - "./logic:/logic"
+      - "./:/logic"
     ports:
       - "8000:8000"
     networks:
