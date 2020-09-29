@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: production-was
+  namespace: floweryroad
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: production-was
+  template:
+    metadata:
+      labels:
+        app: production-was
+    spec:
+      containers:
+      - name: was
+        image: lunacircle4/logic.floweryroad:${TAG}
+        imagePullPolicy: Always
+        envFrom:
+        - secretRef:
+            name: was-production-env
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: production-was
+  namespace: floweryroad
+spec:
+  ports:
+    - name: was-port
+      port: 80
+      targetPort: 80
+  selector:
+    app: production-was
+  type: ClusterIP
