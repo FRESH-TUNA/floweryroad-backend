@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: production-migrator-2-0-0
+  namespace: floweryroad
+spec:
+  template:
+    spec:
+      containers:
+      - name: production-migrator
+        image: lunacircle4/logic.floweryroad:${TAG}
+        imagePullPolicy: Always
+        command: ["/bin/sh"]
+        args: ["-c", "python3 manage.py migrate --settings=config.environments.production;"]
+        envFrom:
+        - secretRef:
+            name: production-was
+      restartPolicy: Never
+  backoffLimit: 4
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: production-asset-compiler-2-0-0
+  namespace: floweryroad
+spec:
+  template:
+    spec:
+      containers:
+      - name: production-asset-compiler
+        image: lunacircle4/logic.floweryroad:${TAG}
+        imagePullPolicy: Always
+        command: ["/bin/sh"]
+        args: ["./docker/entrypoints/asset_compile.sh"]
+        envFrom:
+        - secretRef:
+            name: production-was
+      restartPolicy: Never
+  backoffLimit: 4

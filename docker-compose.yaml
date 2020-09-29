@@ -8,27 +8,19 @@ services:
     container_name: database.development.floweryroad-backend
     volumes:
       - database.development.floweryroad:/var/lib/postgresql/data
-    networks:
-      - development.floweryroad-backend
 
   logic:
     env_file:
       - envs/logic/development.env
     container_name: logic.development.floweryroad-backend
     build:
-      context: ./logic
+      context: ./
       dockerfile: docker/development/Dockerfile
     volumes:
-      - "./logic:/logic"
+      - "./:/floweryroad"
     ports:
       - "8000:8000"
-    networks:
-      - development.floweryroad-backend
 
 volumes:
   database.development.floweryroad:
-    external: true
-
-networks:
-  development.floweryroad-backend:
     external: true
