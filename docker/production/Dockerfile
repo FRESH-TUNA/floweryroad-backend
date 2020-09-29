@@ -1,14 +1,16 @@
 # production
 FROM lunacircle4/python:3.8.1
-WORKDIR /web
-COPY . .
+WORKDIR /floweryroad
+
 RUN apt update \
     && apt install -y postgresql postgresql-contrib libpq-dev supervisor \
     && zlib1g-dev libjpeg-dev \         
-    && rm -rf /var/lib/apt/lists/* \
-    && cp ./docker/prod/supervisord_was.conf /etc/supervisor/conf.d \
-    && mkdir logs
+    && rm -rf /var/lib/apt/lists/*
     
-RUN pip3 --no-cache-dir install -r requirements.txt
+COPY requirements.txt ./
+RUN pip3 -v --no-cache-dir install -r requirements.txt && rm -rf requirements.txt
 
-ENTRYPOINT ["/usr/bin/supervisord"]
+COPY . .
+RUN cp ./docker/production/was.supervisord.conf /etc/supervisor/conf.d
+
+ENTRYPOINT ["sh", "./docker/production/service"]

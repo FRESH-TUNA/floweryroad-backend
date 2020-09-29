@@ -1,5 +1,7 @@
 from .base import *
 import os
+import logging.config
+
 DEBUG = True
 
 INSTALLED_APPS = INSTALLED_APPS + [
@@ -9,8 +11,12 @@ INSTALLED_APPS = INSTALLED_APPS + [
 MIDDLEWARE = MIDDLEWARE + [
     'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
-
 INTERNAL_IPS = ('172.19.0.1',)
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
 
 # CONFIG_SECRET_DIR = os.path.join(BASE_DIR, '.credential')
 # CONFIG_SETTINGS_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'devDBCredential.json')
@@ -19,11 +25,11 @@ INTERNAL_IPS = ('172.19.0.1',)
 
 ROOT_URLCONF = 'config.urls.development'
 
+
+
 #media 설정
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-import logging.config
-import os
+MEDIA_URL = "http://localhost:8000/media/"
 
 LOGGING = {
     'version': 1,

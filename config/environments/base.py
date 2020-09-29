@@ -12,15 +12,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 from datetime import timedelta
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))))
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
-# SECURITY WARNING: don't run with debug turned on in production!
-
-ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split(',')
+ALLOWED_HOSTS = ['*']
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
@@ -67,11 +62,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
-
 # AUTH_USER_MODEL must be of the form 'app_label.model_name'
 AUTH_USER_MODEL = 'floweryroad-auth.User'
 
@@ -90,8 +80,6 @@ TEMPLATES = [
         },
     },
 ]
-
-# WSGI_APPLICATION = 'config.wsgi'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -138,4 +126,4 @@ DATABASES = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_URL = '/static/'
-MEDIA_URL = os.environ['MEDIA_URL']
+MEDIA_URL = "/media/"

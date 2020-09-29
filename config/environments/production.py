@@ -1,48 +1,44 @@
-import json
 from django.conf import settings
 from .base import *
+import os
 
-CONFIG_SECRET_DIR = os.path.join(BASE_DIR, '.credential')
-CONFIG_SETTINGS_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'credentials.json')
-config_secret = json.loads(open(CONFIG_SETTINGS_COMMON_FILE).read())
+DEBUG = True
 
-DEBUG = False
+SECRET_KEY = os.environ['SECRET_KEY']
 
-SECRET_KEY = config_secret['SECRET_KEY']
-
-ROOT_URLCONF = 'floweryroad.urls.production'
-
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'ec2-15-164-210-94.ap-northeast-2.compute.amazonaws.com',
-]
+ROOT_URLCONF = 'config.urls.production'
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
-    "http://floweryroad.s3-website.ap-northeast-2.amazonaws.com"
+    os.environ['CORS']
 ]
 
-#AWS SETTING
-AWS_ACCESS_KEY_ID = config_secret['aws']['access_key_id']
-AWS_SECRET_ACCESS_KEY = config_secret['aws']['secret_access_key']
-AWS_STORAGE_BUCKET_NAME = config_secret['aws']['s3_bucket_name']
-AWS_S3_SIGNATURE_VERSION = 's3v4'
-AWS_S3_REGION_NAME = 'ap-northeast-2'
-
-#Storage setting
-DEFAULT_FILE_STORAGE = 'floweryroad.settings.storage_config.MediaStorage'
-STATICFILES_STORAGE = 'floweryroad.settings.storage_config.StaticStorage'
-MEDIAFILES_LOCATION = 'media'
-STATICFILES_LOCATION = 'static'
-
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config_secret['db']['NAME'],
-        'USER': config_secret['db']['USER'],
-        'PASSWORD': config_secret['db']['PASSWORD'],
-        'HOST': config_secret['db']['HOST'],
-        'PORT': config_secret['db']['PORT'],
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST': os.environ['DB_HOST'],
+        'PORT': os.environ['DB_PORT']
     }
 }
+
+# AWS Setting
+AWS_REGION = os.environ['AWS_REGION']
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_HOST = 's3.%s.amazonaws.com' % AWS_REGION
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+# Static Setting
+# STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+STATICFILES_STORAGE = 'config.storages.static_storage.StaticStorage' 
+
+# Media Setting
+# MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+DEFAULT_FILE_STORAGE = 'config.storages.media_storage.MediaStorage' 

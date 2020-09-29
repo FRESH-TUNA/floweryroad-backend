@@ -7,6 +7,6 @@ until pg_isready -h database > /dev/null 2>&1; do
 done
 printf '\npostgres loaded! \n start migration ...\n'
 
-python3 /logic/manage.py makemigrations
-python3 /logic/manage.py migrate
+python3 manage.py makemigrations
+python3 manage.py migrate
 echo "migration success!"
