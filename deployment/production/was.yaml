@@ -19,7 +19,7 @@ spec:
         imagePullPolicy: Always
         envFrom:
         - secretRef:
-            name: was-production-env
+            name: production-was
 ---
 apiVersion: v1
 kind: Service
