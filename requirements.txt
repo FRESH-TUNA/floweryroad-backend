@@ -3,7 +3,7 @@ boto3==1.15.6
 botocore==1.18.6
 Django==3.1
 django-cors-headers==3.5.0
-django-debug-toolbar==2.2
+django-debug-toolbar==2.2.1
 django-filter==2.3.0
 django-storages==1.10
 djangorestframework==3.11.1
